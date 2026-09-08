@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Madejitas.sv - Inicio</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "inverse-surface": "#342e37",
+                      "on-secondary": "#ffffff",
+                      "surface-bright": "#fff7fe",
+                      "error": "#ba1a1a",
+                      "inverse-on-surface": "#f8edf9",
+                      "on-error-container": "#93000a",
+                      "primary-fixed": "#f1dbff",
+                      "on-primary-fixed-variant": "#661aa3",
+                      "error-container": "#ffdad6",
+                      "tertiary-fixed-dim": "#cec4ca",
+                      "on-background": "#1f1a22",
+                      "surface-container-highest": "#e9dfeb",
+                      "surface": "#fff7fe",
+                      "lilac": "#C084FC",
+                      "on-secondary-fixed": "#29074a",
+                      "surface-tint": "#803abd",
+                      "deep-purple": "#4C1D95",
+                      "fuchsia-accent": "#D946EF",
+                      "primary": "#500088",
+                      "tertiary-container": "#50494e",
+                      "surface-container-lowest": "#ffffff",
+                      "primary-fixed-dim": "#dfb7ff",
+                      "on-surface": "#1f1a22",
+                      "surface-container": "#f5ebf6",
+                      "on-surface-variant": "#4c4452",
+                      "cream-bg": "#FFFBF7",
+                      "tertiary-fixed": "#eae0e6",
+                      "background": "#fff7fe",
+                      "inverse-primary": "#dfb7ff",
+                      "on-tertiary-fixed-variant": "#4b454a",
+                      "surface-variant": "#e9dfeb",
+                      "on-secondary-container": "#614283",
+                      "surface-container-high": "#efe5f1",
+                      "on-primary-fixed": "#2d0050",
+                      "on-tertiary-fixed": "#1f1a1e",
+                      "violet": "#7C3AED",
+                      "outline-variant": "#cfc2d4",
+                      "outline": "#7e7383",
+                      "tertiary": "#393337",
+                      "secondary-fixed-dim": "#dbb8ff",
+                      "on-secondary-fixed-variant": "#573878",
+                      "surface-container-low": "#fbf0fc",
+                      "primary-container": "#6b21a8",
+                      "surface-dark": "#2E1065",
+                      "on-tertiary-container": "#c2b9be",
+                      "on-tertiary": "#ffffff",
+                      "on-primary": "#ffffff",
+                      "secondary": "#6f5092",
+                      "soft-pink": "#FCE7F3",
+                      "on-primary-container": "#d7a8ff",
+                      "surface-dim": "#e1d7e2",
+                      "secondary-fixed": "#efdbff",
+                      "secondary-container": "#d9b5ff",
+                      "on-error": "#ffffff"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "stack-sm": "0.5rem",
+                      "section-gap": "5rem",
+                      "margin-desktop": "2.5rem",
+                      "stack-md": "1rem",
+                      "gutter": "1.5rem",
+                      "stack-lg": "2rem",
+                      "margin-mobile": "1rem",
+                      "container-max": "1280px",
+                      "pb-safe": "env(safe-area-inset-bottom)"
+              },
+              "fontFamily": {
+                      "body-md": ["Plus Jakarta Sans", "sans-serif"],
+                      "headline-md": ["Plus Jakarta Sans", "sans-serif"],
+                      "body-lg": ["Plus Jakarta Sans", "sans-serif"],
+                      "label-sm": ["Plus Jakarta Sans", "sans-serif"],
+                      "display-lg": ["Plus Jakarta Sans", "sans-serif"],
+                      "headline-lg": ["Plus Jakarta Sans", "sans-serif"],
+                      "display-lg-mobile": ["Plus Jakarta Sans", "sans-serif"],
+                      "label-lg": ["Plus Jakarta Sans", "sans-serif"]
+              },
+              "fontSize": {
+                      "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                      "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                      "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                      "label-sm": ["12px", {"lineHeight": "1.2", "fontWeight": "500"}],
+                      "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "headline-lg": ["32px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                      "display-lg-mobile": ["32px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                      "label-lg": ["14px", {"lineHeight": "1.2", "letterSpacing": "0.01em", "fontWeight": "600"}]
+              }
+            }
+          }
+        }
+    </script>
+<style>
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body-md min-h-screen flex flex-col pb-20 md:pb-0">
+<!-- TopAppBar -->
+<header class="bg-surface/80 dark:bg-surface-dark/80 backdrop-blur-md docked full-width top-0 sticky z-50 shadow-sm border-b border-soft-pink dark:border-primary-container hidden md:block">
+<div class="flex justify-between items-center px-margin-mobile md:px-margin-desktop py-4 max-w-container-max mx-auto">
+<div class="font-display-lg text-display-lg-mobile md:text-display-lg text-primary dark:text-primary-fixed tracking-tight">
+                Madejitas.sv
+            </div>
+<nav class="hidden md:flex space-x-6">
+<a class="text-primary dark:text-primary-fixed font-bold border-b-2 border-primary pb-1 font-headline-md text-headline-md hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-all scale-95 duration-150 ease-in-out" href="#">Inicio</a>
+<a class="text-on-surface-variant dark:text-on-tertiary-container hover:text-primary transition-colors font-headline-md text-headline-md hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-all scale-95 duration-150 ease-in-out" href="#">Catálogo</a>
+<a class="text-on-surface-variant dark:text-on-tertiary-container hover:text-primary transition-colors font-headline-md text-headline-md hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-all scale-95 duration-150 ease-in-out" href="#">Novedades</a>
+<a class="text-on-surface-variant dark:text-on-tertiary-container hover:text-primary transition-colors font-headline-md text-headline-md hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-all scale-95 duration-150 ease-in-out" href="#">Inspiración</a>
+<a class="text-on-surface-variant dark:text-on-tertiary-container hover:text-primary transition-colors font-headline-md text-headline-md hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-all scale-95 duration-150 ease-in-out" href="#">Sobre nosotros</a>
+<a class="text-on-surface-variant dark:text-on-tertiary-container hover:text-primary transition-colors font-headline-md text-headline-md hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-all scale-95 duration-150 ease-in-out" href="#">Contacto</a>
+</nav>
+<div class="flex items-center space-x-4">
+<button class="text-primary dark:text-primary-fixed hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-all scale-95 duration-150 ease-in-out p-2 rounded-full">
+<span class="material-symbols-outlined">search</span>
+</button>
+<button class="text-primary dark:text-primary-fixed hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-all scale-95 duration-150 ease-in-out p-2 rounded-full">
+<span class="material-symbols-outlined">favorite</span>
+</button>
+<button class="text-primary dark:text-primary-fixed hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-all scale-95 duration-150 ease-in-out p-2 rounded-full relative">
+<span class="material-symbols-outlined">shopping_bag</span>
+<span class="absolute top-1 right-1 bg-fuchsia-accent text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center">2</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Mobile Header (Simplified) -->
+<header class="md:hidden bg-surface/80 backdrop-blur-md sticky top-0 z-40 border-b border-soft-pink px-margin-mobile py-4 flex justify-between items-center">
+<div class="font-display-lg-mobile text-display-lg-mobile text-primary tracking-tight">
+            Madejitas.sv
+        </div>
+<div class="flex space-x-2">
+<button class="text-primary p-2">
+<span class="material-symbols-outlined">search</span>
+</button>
+<button class="text-primary p-2 relative">
+<span class="material-symbols-outlined">shopping_bag</span>
+<span class="absolute top-1 right-1 bg-fuchsia-accent text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center">2</span>
+</button>
+</div>
+</header>
+<main class="flex-grow">
+<!-- Hero Section -->
+<section class="relative w-full overflow-hidden bg-surface-container-low">
+<div class="absolute inset-0 z-0">
+<div class="bg-cover bg-center w-full h-full opacity-40 mix-blend-multiply" data-alt="A bright, inviting lifestyle flat lay featuring skeins of premium yarn in soft pastel colors like lilac, pink, and cream, beautifully arranged on a clean white surface alongside elegant wooden knitting needles. The lighting is soft and diffused, creating a serene, creative, and inspiring 'lifestyle boutique' atmosphere with a modern glassmorphism aesthetic." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDAoq4jiRFT2yfaCZ2gTs5ZAcxnT6UBYqgwrANDN3rWYfeUtEYAcFIOE_rSc22BEJydU2Y34ub4zcMz8h7gFWx87QPpf1NSEFeg_Z2i-Wbz-F8OM25_MyICQ6eDxuH42fAa7XEjMZMsYtpXPgYcN56ZCobzmo4xnvZOpyG1E1MdYrHjyfLm1vBbCyZOGP1X21bhXv-405DOmwOiFyZk5VSK9__ICK5ELCajiDJ1_9GlZX4UWVP5JUc9')"></div>
+<div class="absolute inset-0 bg-gradient-to-r from-surface via-surface/80 to-transparent"></div>
+</div>
+<div class="relative z-10 px-margin-mobile md:px-margin-desktop py-12 md:py-24 max-w-container-max mx-auto flex flex-col items-start w-full md:w-2/3 lg:w-1/2">
+<h1 class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg text-on-surface mb-4">
+                    Todo comienza<br/>con una madejita <span class="text-lilac">💜</span>
+</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-8 max-w-md">
+                    Encuentra hilos, accesorios y materiales para transformar tus ideas en algo hecho por ti.
+                </p>
+<div class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+<button class="bg-deep-purple text-white font-label-lg text-label-lg py-3 px-8 rounded-full shadow-md hover:bg-primary transition-colors text-center w-full sm:w-auto">
+                        Explorar catálogo
+                    </button>
+<button class="bg-surface/80 backdrop-blur-sm border-2 border-lilac text-deep-purple font-label-lg text-label-lg py-3 px-8 rounded-full shadow-sm hover:bg-surface-container transition-colors text-center w-full sm:w-auto">
+                        Ver novedades
+                    </button>
+</div>
+</div>
+</section>
+<!-- Stats Section -->
+<section class="px-margin-mobile md:px-margin-desktop py-8 border-b border-soft-pink">
+<div class="max-w-container-max mx-auto flex overflow-x-auto hide-scrollbar gap-8 md:justify-around items-center">
+<div class="flex flex-col items-center flex-shrink-0">
+<span class="font-headline-md text-headline-md text-deep-purple">+500</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Productos</span>
+</div>
+<div class="flex flex-col items-center flex-shrink-0">
+<span class="font-headline-md text-headline-md text-deep-purple">+10k</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Clientes felices</span>
+</div>
+<div class="flex flex-col items-center flex-shrink-0">
+<span class="font-headline-md text-headline-md text-deep-purple text-center">Envíos a</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">todo el país</span>
+</div>
+<div class="flex flex-col items-center flex-shrink-0">
+<span class="font-headline-md text-headline-md text-deep-purple text-center">Atención</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">por WhatsApp</span>
+</div>
+</div>
+</section>
+<!-- Categories Section -->
+<section class="px-margin-mobile md:px-margin-desktop py-12 max-w-container-max mx-auto">
+<div class="flex justify-between items-end mb-6">
+<h2 class="font-headline-lg text-headline-lg text-on-surface">¿Qué vas a crear hoy? ✨</h2>
+<a class="font-label-sm text-label-sm text-deep-purple border border-outline-variant rounded-full px-4 py-1 hover:bg-surface-container-low hidden sm:block" href="#">Ver todas</a>
+</div>
+<div class="flex overflow-x-auto hide-scrollbar gap-4 pb-4">
+<!-- Category Item -->
+<div class="flex flex-col items-center gap-2 flex-shrink-0 w-24">
+<div class="w-20 h-20 rounded-full bg-surface-container p-1 border border-soft-pink shadow-sm overflow-hidden">
+<img class="w-full h-full object-cover rounded-full" data-alt="A close-up studio shot of a perfectly round ball of bright pink 'Amigurumi' cotton yarn, beautifully lit against a pure white background, emphasizing its smooth, tightly spun texture suitable for detailed crochet work. The lighting is high-key and professional." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDNvzzCQFOMxqB-fePciGVeDj3Ysky-8VWCm9gM406Sx38-8JmFrsA0z3fYUBY3DrpnASqe7CQXkpc-r81nVFFlxgOrUD_hy1v82wp1dc1F0C33txrk47n9fDQNZUY-JVHBoXXd72AXfB6pHU13Oq5iDTAewqY_JIPWksiTOjy1ZWqW1UsGbyuRVInVSb4lBGqe9MbveVKIrXFQTD-TXyCbnu1RDm5FdVuTApozEogePV7RjRRUqSHO"/>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface text-center">Amigurumi</span>
+</div>
+<!-- Category Item -->
+<div class="flex flex-col items-center gap-2 flex-shrink-0 w-24">
+<div class="w-20 h-20 rounded-full bg-surface-container p-1 border border-soft-pink shadow-sm overflow-hidden">
+<img class="w-full h-full object-cover rounded-full" data-alt="A close-up studio shot of a large, squishy skein of chunky lilac 'Chenille' blanket yarn, resting gently on a light cream surface. The texture is extremely soft and plush, catching soft highlights that emphasize its cozy, voluminous nature." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA2M2ycfxKSuneNlT3kpjWdkxKzxhB75kMgF4ztWQF2hKALarhWcNOewq6mTlPiuyPZWfl2xkW_CLzDr8PGp4pwXlGyeV088o3dGd01M9ZAgFx_SZvh4TFTnrAvEku0LdQg5yan-LjSepOjgOlYzn2LQ_eokUOoHbUHLCnBTbXVhrrY25N8P4K0WlUj9GGYzttLC2aG0fqP2M7V5-JbVjRKiVTt2yRb9DmtemmauevTFmqbytW04Nbj"/>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface text-center">Chenille</span>
+</div>
+<!-- Category Item -->
+<div class="flex flex-col items-center gap-2 flex-shrink-0 w-24">
+<div class="w-20 h-20 rounded-full bg-surface-container p-1 border border-soft-pink shadow-sm overflow-hidden">
+<img class="w-full h-full object-cover rounded-full" data-alt="A close-up studio shot of a neatly wound spool of thick 'Trapillo' (t-shirt yarn) in a vibrant teal color, set against a pristine white background. The image highlights the recycled, slightly irregular texture of the thick fabric strips." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBH9QLZP4TiXJ2uQ3r2X9qCXK_h2IMejua8aiAppaxMx56JhPiglZCe1-ZsqSgkJ6T22rjCA6GCNTf3wlCCg_5WuhN7Ix8tmFHBwM5XIw5cz0_MmMv0jG7wI32-fkft03RVk7eJrHra3jS0NE980FLHXHCFin1RVn1GkPXqpcvZlSLloyZkOH9kiE1MCI_QZiBnIdmsTmdzLFtHHICVHE5tvL_-oWhYH1zaMHZhFptefrjR_YHX68Pl"/>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface text-center">Trapillo</span>
+</div>
+<!-- Category Item -->
+<div class="flex flex-col items-center gap-2 flex-shrink-0 w-24">
+<div class="w-20 h-20 rounded-full bg-surface-container p-1 border border-soft-pink shadow-sm overflow-hidden">
+<img class="w-full h-full object-cover rounded-full" data-alt="A close-up studio shot of a classic skein of natural beige 'Algodón' (cotton) yarn, beautifully arranged with gentle curves to show off its matte finish and crisp stitch definition. The lighting is soft, warm, and natural." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC0_cCjLV8493gEk_9FQmGpLK_5FHySaxYle36ZtISDT--YbTEWB9hdMKuNs_l4H8jyXg9LU_7HUhfHTS3eYeSwlyDZ657ZIgPrVWqMOrrambayMoXnbCG2sq3vgkmotIFxpF9MxjpLKBCgabiYcK5v4yajrDlxiwp1KdFFa9CrQG2XuqxHtqAIS5jklDug_cPYDP4X6nIGuxCSPuAtXWpyUzT-pKwCp1-A2dMsTK5tID6uwelPdcH-"/>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface text-center">Algodón</span>
+</div>
+<!-- Category Item -->
+<div class="flex flex-col items-center gap-2 flex-shrink-0 w-24">
+<div class="w-20 h-20 rounded-full bg-surface-container p-1 border border-soft-pink shadow-sm overflow-hidden">
+<img class="w-full h-full object-cover rounded-full" data-alt="A high-quality, top-down view of a collection of sleek, ergonomic crochet hooks in pastel colors (lilac, pink, mint), arranged neatly on a smooth white surface. The image represents 'Herramientas' (tools) with a clean, modern aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBl2X7BoC40V9h-mq4wQC_QzxlXv47bFyaIQmbTV4WmST1W2rWR7LgXqCika-ZkZIupexszdYHjv7Tt5VxNwKDQobpucCMYuETaLOoJGVTgXTdxj2zCisGt0u1KgJgtKZbzEiwDXtV8dk9KnqLT5v8obvkdaYW5piQS21c0Zxnze-DeKgPdVSmGLyY5CUZkFd5nvCaQEMr-FSNFgHBW1GRZxKnEczwHWbDjbdkh5i-58vZscwsoEmBd"/>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface text-center">Herramientas</span>
+</div>
+</div>
+</section>
+<!-- Favorites Section -->
+<section class="bg-surface-dark py-12 px-margin-mobile md:px-margin-desktop">
+<div class="max-w-container-max mx-auto">
+<div class="flex justify-between items-end mb-8">
+<h2 class="font-headline-lg text-headline-lg text-on-primary">Favoritos de la comunidad 💜</h2>
+<div class="hidden md:flex gap-2">
+<button class="w-8 h-8 rounded-full bg-white/10 text-white flex items-center justify-center hover:bg-white/20"><span class="material-symbols-outlined text-sm">chevron_left</span></button>
+<button class="w-8 h-8 rounded-full bg-white/10 text-white flex items-center justify-center hover:bg-white/20"><span class="material-symbols-outlined text-sm">chevron_right</span></button>
+</div>
+</div>
+<div class="flex overflow-x-auto hide-scrollbar gap-6 pb-4">
+<!-- Product Card 1 -->
+<div class="bg-white rounded-xl shadow-[0_4px_20px_-4px_rgba(76,29,149,0.15)] border border-soft-pink w-64 flex-shrink-0 flex flex-col overflow-hidden relative group">
+<div class="absolute top-2 left-2 bg-soft-pink text-deep-purple font-label-sm text-[10px] px-2 py-1 rounded-full z-10">MÁS VENDIDO</div>
+<button class="absolute top-2 right-2 text-outline hover:text-fuchsia-accent z-10 bg-white/80 rounded-full p-1 backdrop-blur-sm">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">favorite</span>
+</button>
+<div class="h-48 w-full bg-surface-container-low overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="A clear, professional product photo of two skeins of 'Hilo Amigurumi' yarn. One is a warm beige and the other is a soft brown. They are stacked neatly on a pristine white background. The lighting highlights the smooth, tightly spun cotton texture." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCvXsnTXZlxVPJbzuik5be5MauHBK_O5pp4hBORCDE4Q19U2SzU3yBLTxi2_sbXpys3zHuOjzMWg9jDnlcCDzUaSFPTyC3vzaKBVWa4NNJKOVDPloYufQMzsFFSvQZYfEnqTlzlT48SaPDWq561oPUGZO6HvjNfBkMSgdclEZgDpWbc-NEQio1oo926mH9FEEOPw_CxSqkb1IrqWZFyizIIlxQvUv08qTEZR-Lx76cN2CUodV-oH2wN"/>
+</div>
+<div class="p-4 flex flex-col flex-grow">
+<h3 class="font-label-lg text-label-lg text-on-surface mb-1">Hilo Amigurumi</h3>
+<p class="font-body-sm text-[12px] text-on-surface-variant mb-2">Círculo 125g</p>
+<div class="mt-auto flex justify-between items-center">
+<span class="font-headline-md text-[18px] text-deep-purple">Desde $4.50</span>
+<button class="bg-deep-purple text-white rounded-full w-8 h-8 flex items-center justify-center hover:bg-primary transition-colors">
+<span class="material-symbols-outlined text-sm">add</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Product Card 2 -->
+<div class="bg-white rounded-xl shadow-[0_4px_20px_-4px_rgba(76,29,149,0.15)] border border-soft-pink w-64 flex-shrink-0 flex flex-col overflow-hidden relative group">
+<button class="absolute top-2 right-2 text-outline hover:text-fuchsia-accent z-10 bg-white/80 rounded-full p-1 backdrop-blur-sm">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">favorite</span>
+</button>
+<div class="h-48 w-full bg-surface-container-low overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="A clear, professional product photo of a large, ultra-soft skein of 'Chenille Amigurumi' yarn in a delicate lavender color, sitting on a pure white background. The texture is extremely plush and velvety, inviting touch." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBOdy1_VwMbjItaaMTBEou-Y_GOth-xW-VE2ftx_A2qyDJxsaEfr7294Rj59Hi7qW57RAhRVEO45psxG6U5r7gJa6Y_BEgp-tnqSJ5MsNsMl7aX3a_b5PyiDrU_DWeefZKBeBSVA3hvQR5Wks9V7tCj2E1wGf1UrjcajW9Vp8-TbVZVDagKhVceiPxHBhNpIdS7Lm8j0FZl0-FtkIKO_Hp8YOpM68q7ufEMu5nKlQ4wMwWwYcjSHuXT"/>
+</div>
+<div class="p-4 flex flex-col flex-grow">
+<h3 class="font-label-lg text-label-lg text-on-surface mb-1">Chenille Amigurumi</h3>
+<p class="font-body-sm text-[12px] text-on-surface-variant mb-2">100g - Hebra 3mm</p>
+<div class="mt-auto flex justify-between items-center">
+<span class="font-headline-md text-[18px] text-deep-purple">Desde $6.00</span>
+<button class="bg-deep-purple text-white rounded-full w-8 h-8 flex items-center justify-center hover:bg-primary transition-colors">
+<span class="material-symbols-outlined text-sm">add</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Product Card 3 -->
+<div class="bg-white rounded-xl shadow-[0_4px_20px_-4px_rgba(76,29,149,0.15)] border border-soft-pink w-64 flex-shrink-0 flex flex-col overflow-hidden relative group">
+<button class="absolute top-2 right-2 text-outline hover:text-fuchsia-accent z-10 bg-white/80 rounded-full p-1 backdrop-blur-sm">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">favorite</span>
+</button>
+<div class="h-48 w-full bg-surface-container-low overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="A clear, professional product photo of a thick roll of 'Trapillo Premium' t-shirt yarn in a bright mustard yellow color, resting on a white background. The rolled structure and slightly chunky texture of the upcycled fabric are prominent." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAUIW1JBMzva4wsiMGIHLTLNl4M9RXUCpy_K9csx3JSdu3xYaP5oquGsIkYpgDukaudzDrUqBY-qhvhL-9AiX32XFayJuaDqf0LjWuJBUzWeBwHhyBMyQPR3D5RIycTI0v-NdW10ivePwObU1Ym3m53efJooTG0f-z9dT1yKgQLlAdd1kMmDtZ-sn8M-wANLjVmHtvApPJxnqhomzrNrk9QCJh-U2r5AwqLintkA029VHTTsg7zIjIp"/>
+</div>
+<div class="p-4 flex flex-col flex-grow">
+<h3 class="font-label-lg text-label-lg text-on-surface mb-1">Trapillo Premium</h3>
+<p class="font-body-sm text-[12px] text-on-surface-variant mb-2">500g - Colores</p>
+<div class="mt-auto flex justify-between items-center">
+<span class="font-headline-md text-[18px] text-deep-purple">Desde $4.25</span>
+<button class="bg-deep-purple text-white rounded-full w-8 h-8 flex items-center justify-center hover:bg-primary transition-colors">
+<span class="material-symbols-outlined text-sm">add</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container dark:bg-surface-dark w-full mt-section-gap border-t border-soft-pink dark:border-primary-container flat no shadows hidden md:block">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-gutter px-margin-mobile md:px-margin-desktop py-stack-lg max-w-container-max mx-auto">
+<div class="col-span-1 md:col-span-1">
+<div class="font-headline-md text-primary font-headline-md text-primary mb-4">Madejitas.sv</div>
+<p class="text-on-surface-variant text-sm">© 2024 Madejitas SV. Todos los derechos reservados.</p>
+</div>
+<div class="col-span-1 md:col-span-3 flex flex-wrap gap-8 justify-end">
+<a class="text-on-surface-variant dark:text-on-tertiary-container hover:text-fuchsia-accent transition-colors underline-offset-4 hover:underline font-body-md text-body-md" href="#">Políticas de Envío</a>
+<a class="text-on-surface-variant dark:text-on-tertiary-container hover:text-fuchsia-accent transition-colors underline-offset-4 hover:underline font-body-md text-body-md" href="#">Términos y Condiciones</a>
+<a class="text-on-surface-variant dark:text-on-tertiary-container hover:text-fuchsia-accent transition-colors underline-offset-4 hover:underline font-body-md text-body-md" href="#">Preguntas Frecuentes</a>
+<a class="text-on-surface-variant dark:text-on-tertiary-container hover:text-fuchsia-accent transition-colors underline-offset-4 hover:underline font-body-md text-body-md" href="#">Guía de Hilados</a>
+</div>
+</div>
+</footer>
+<!-- BottomNavBar -->
+<nav class="bg-surface dark:bg-surface-dark fixed bottom-0 w-full z-50 rounded-t-xl border-t border-soft-pink dark:border-primary-container shadow-[0_-4px_6px_-1px_rgba(76,29,149,0.1)] shadow-lg md:hidden">
+<div class="flex justify-around items-center h-16 px-2 pb-safe">
+<!-- Active Tab: Inicio -->
+<a class="flex flex-col items-center justify-center bg-primary-container dark:bg-primary text-on-primary-container dark:text-on-primary rounded-full px-4 py-1 active:bg-primary-container/50 Active: scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="font-label-sm text-label-sm mt-1">Inicio</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-tertiary-container active:bg-primary-container/50" href="#">
+<span class="material-symbols-outlined">grid_view</span>
+<span class="font-label-sm text-label-sm mt-1">Catálogo</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-tertiary-container active:bg-primary-container/50" href="#">
+<span class="material-symbols-outlined">search</span>
+<span class="font-label-sm text-label-sm mt-1">Buscar</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-tertiary-container active:bg-primary-container/50" href="#">
+<span class="material-symbols-outlined">receipt_long</span>
+<span class="font-label-sm text-label-sm mt-1">Cotización</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-tertiary-container active:bg-primary-container/50" href="#">
+<span class="material-symbols-outlined text-green-500">chat</span>
+<span class="font-label-sm text-label-sm mt-1">WhatsApp</span>
+</a>
+</div>
+</nav>
+</body></html>

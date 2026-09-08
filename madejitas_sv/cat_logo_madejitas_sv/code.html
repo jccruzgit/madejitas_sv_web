@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+
+<html lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Catálogo - Madejitas SV</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        /* Custom scrollbar for sidebar */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background-color: #e9dfeb;
+            border-radius: 20px;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "inverse-surface": "#342e37",
+                        "on-secondary": "#ffffff",
+                        "surface-bright": "#fff7fe",
+                        "error": "#ba1a1a",
+                        "inverse-on-surface": "#f8edf9",
+                        "on-error-container": "#93000a",
+                        "primary-fixed": "#f1dbff",
+                        "on-primary-fixed-variant": "#661aa3",
+                        "error-container": "#ffdad6",
+                        "tertiary-fixed-dim": "#cec4ca",
+                        "on-background": "#1f1a22",
+                        "surface-container-highest": "#e9dfeb",
+                        "surface": "#fff7fe",
+                        "lilac": "#C084FC",
+                        "on-secondary-fixed": "#29074a",
+                        "surface-tint": "#803abd",
+                        "deep-purple": "#4C1D95",
+                        "fuchsia-accent": "#D946EF",
+                        "primary": "#500088",
+                        "tertiary-container": "#50494e",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-fixed-dim": "#dfb7ff",
+                        "on-surface": "#1f1a22",
+                        "surface-container": "#f5ebf6",
+                        "on-surface-variant": "#4c4452",
+                        "cream-bg": "#FFFBF7",
+                        "tertiary-fixed": "#eae0e6",
+                        "background": "#fff7fe",
+                        "inverse-primary": "#dfb7ff",
+                        "on-tertiary-fixed-variant": "#4b454a",
+                        "surface-variant": "#e9dfeb",
+                        "on-secondary-container": "#614283",
+                        "surface-container-high": "#efe5f1",
+                        "on-primary-fixed": "#2d0050",
+                        "on-tertiary-fixed": "#1f1a1e",
+                        "violet": "#7C3AED",
+                        "outline-variant": "#cfc2d4",
+                        "outline": "#7e7383",
+                        "tertiary": "#393337",
+                        "secondary-fixed-dim": "#dbb8ff",
+                        "on-secondary-fixed-variant": "#573878",
+                        "surface-container-low": "#fbf0fc",
+                        "primary-container": "#6b21a8",
+                        "surface-dark": "#2E1065",
+                        "on-tertiary-container": "#c2b9be",
+                        "on-tertiary": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "secondary": "#6f5092",
+                        "soft-pink": "#FCE7F3",
+                        "on-primary-container": "#d7a8ff",
+                        "surface-dim": "#e1d7e2",
+                        "secondary-fixed": "#efdbff",
+                        "secondary-container": "#d9b5ff",
+                        "on-error": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-sm": "0.5rem",
+                        "section-gap": "5rem",
+                        "margin-desktop": "2.5rem",
+                        "stack-md": "1rem",
+                        "gutter": "1.5rem",
+                        "stack-lg": "2rem",
+                        "margin-mobile": "1rem",
+                        "container-max": "1280px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Plus Jakarta Sans"],
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "body-lg": ["Plus Jakarta Sans"],
+                        "label-sm": ["Plus Jakarta Sans"],
+                        "display-lg": ["Plus Jakarta Sans"],
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "display-lg-mobile": ["Plus Jakarta Sans"],
+                        "label-lg": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "body-md": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "1.3", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "label-sm": ["12px", { "lineHeight": "1.2", "fontWeight": "500" }],
+                        "display-lg": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-lg": ["32px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                        "display-lg-mobile": ["32px", { "lineHeight": "1.2", "fontWeight": "700" }],
+                        "label-lg": ["14px", { "lineHeight": "1.2", "letterSpacing": "0.01em", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col relative pb-20 md:pb-0">
+<!-- TopAppBar (Hidden on Mobile, Flex on Desktop) -->
+<header class="hidden md:block bg-surface/90 backdrop-blur-md text-primary font-headline-md top-0 sticky z-50 border-b border-soft-pink shadow-sm">
+<div class="flex justify-between items-center px-margin-desktop py-4 max-w-container-max mx-auto">
+<div class="font-display-lg text-primary tracking-tight">Madejitas.sv</div>
+<nav class="flex gap-6 items-center">
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-lg" href="#">Inicio</a>
+<a class="text-primary font-bold border-b-2 border-primary pb-1 font-label-lg" href="#">Catálogo</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-lg" href="#">Novedades</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-lg" href="#">Inspiración</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-lg" href="#">Sobre nosotros</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-lg" href="#">Contacto</a>
+</nav>
+<div class="flex gap-4 items-center">
+<button aria-label="favorite" class="text-primary hover:bg-surface-container-low transition-all p-2 rounded-full scale-95 duration-150 ease-in-out flex items-center justify-center">
+<span class="material-symbols-outlined">favorite</span>
+</button>
+<button aria-label="shopping_bag" class="text-primary hover:bg-surface-container-low transition-all p-2 rounded-full scale-95 duration-150 ease-in-out flex items-center justify-center relative">
+<span class="material-symbols-outlined">shopping_bag</span>
+<span class="absolute top-1 right-1 bg-fuchsia-accent text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center border-2 border-surface">2</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-grow w-full max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-8 md:py-12 flex flex-col gap-8">
+<!-- Page Header & Search -->
+<section class="flex flex-col gap-6">
+<div class="flex flex-col gap-2">
+<h1 class="font-headline-lg-mobile md:font-headline-lg text-primary">Catálogo</h1>
+<p class="font-body-md text-on-surface-variant">Encuentra todo lo que necesitas para tu próximo proyecto</p>
+</div>
+<!-- Enhanced Search Bar -->
+<div class="w-full md:w-2/3 bg-surface-container-lowest rounded-full border border-soft-pink shadow-sm flex items-center px-4 py-3 focus-within:border-lilac focus-within:ring-2 focus-within:ring-primary-fixed transition-all">
+<span class="material-symbols-outlined text-on-surface-variant mr-3">search</span>
+<input class="flex-grow bg-transparent border-none focus:ring-0 text-on-surface font-body-md placeholder-on-surface-variant/70 outline-none" placeholder="¿Qué necesitas para tu próximo proyecto?" type="text"/>
+</div>
+<!-- Mobile Filter Toggle & Sort (Desktop sort is aligned right) -->
+<div class="flex justify-between items-center w-full mt-4">
+<button class="md:hidden flex items-center gap-2 text-primary font-label-lg bg-surface-container-low px-4 py-2 rounded-full border border-soft-pink">
+<span class="material-symbols-outlined">tune</span> Filtros
+                </button>
+<div class="flex items-center gap-3 ml-auto">
+<span class="font-label-sm text-on-surface-variant hidden md:block">Ordenar por:</span>
+<select class="bg-surface-container-lowest border border-soft-pink text-on-surface font-label-sm rounded-lg px-3 py-2 focus:ring-primary focus:border-primary outline-none cursor-pointer appearance-none pr-8 relative">
+<option>Más recientes</option>
+<option>Precio: Menor a Mayor</option>
+<option>Precio: Mayor a Menor</option>
+<option>Más vendidos</option>
+</select>
+</div>
+</div>
+</section>
+<!-- Layout Grid: Sidebar + Product Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-start">
+<!-- Sidebar Filters (Hidden on mobile by default) -->
+<aside class="hidden lg:flex lg:col-span-3 flex-col gap-8 sticky top-24 pr-4 custom-scrollbar max-h-[calc(100vh-8rem)] overflow-y-auto">
+<!-- Categorías -->
+<div class="flex flex-col gap-3">
+<h3 class="font-label-lg text-primary border-b border-soft-pink pb-2">Categorías</h3>
+<ul class="flex flex-col gap-2 font-body-sm text-on-surface-variant">
+<li><a class="text-primary font-bold bg-primary-fixed/50 px-3 py-1.5 rounded-lg block" href="#">Todos</a></li>
+<li><a class="hover:bg-surface-container-low px-3 py-1.5 rounded-lg block transition-colors" href="#">Amigurumi</a></li>
+<li><a class="hover:bg-surface-container-low px-3 py-1.5 rounded-lg block transition-colors" href="#">Chenille</a></li>
+<li><a class="hover:bg-surface-container-low px-3 py-1.5 rounded-lg block transition-colors" href="#">Trapillo</a></li>
+<li><a class="hover:bg-surface-container-low px-3 py-1.5 rounded-lg block transition-colors" href="#">Algodón</a></li>
+<li><a class="hover:bg-surface-container-low px-3 py-1.5 rounded-lg block transition-colors" href="#">Herramientas</a></li>
+<li><a class="hover:bg-surface-container-low px-3 py-1.5 rounded-lg block transition-colors" href="#">Accesorios</a></li>
+</ul>
+</div>
+<!-- Marca -->
+<div class="flex flex-col gap-3">
+<h3 class="font-label-lg text-primary border-b border-soft-pink pb-2">Marca</h3>
+<div class="flex flex-col gap-2 font-body-sm text-on-surface-variant">
+<label class="flex items-center gap-2 cursor-pointer group">
+<input checked="" class="rounded text-primary focus:ring-primary border-outline-variant w-4 h-4" type="checkbox"/>
+<span class="group-hover:text-primary transition-colors">Círculo</span>
+</label>
+<label class="flex items-center gap-2 cursor-pointer group">
+<input class="rounded text-primary focus:ring-primary border-outline-variant w-4 h-4" type="checkbox"/>
+<span class="group-hover:text-primary transition-colors">Alize</span>
+</label>
+<label class="flex items-center gap-2 cursor-pointer group">
+<input class="rounded text-primary focus:ring-primary border-outline-variant w-4 h-4" type="checkbox"/>
+<span class="group-hover:text-primary transition-colors">Pantera</span>
+</label>
+</div>
+</div>
+<!-- Grosor -->
+<div class="flex flex-col gap-3">
+<h3 class="font-label-lg text-primary border-b border-soft-pink pb-2">Grosor</h3>
+<div class="flex flex-col gap-2 font-body-sm text-on-surface-variant">
+<label class="flex items-center gap-2 cursor-pointer group">
+<input class="rounded text-primary focus:ring-primary border-outline-variant w-4 h-4" type="checkbox"/>
+<span class="group-hover:text-primary transition-colors">Súper fino</span>
+</label>
+<label class="flex items-center gap-2 cursor-pointer group">
+<input class="rounded text-primary focus:ring-primary border-outline-variant w-4 h-4" type="checkbox"/>
+<span class="group-hover:text-primary transition-colors">Fino</span>
+</label>
+<label class="flex items-center gap-2 cursor-pointer group">
+<input class="rounded text-primary focus:ring-primary border-outline-variant w-4 h-4" type="checkbox"/>
+<span class="group-hover:text-primary transition-colors">Medio</span>
+</label>
+<label class="flex items-center gap-2 cursor-pointer group">
+<input checked="" class="rounded text-primary focus:ring-primary border-outline-variant w-4 h-4" type="checkbox"/>
+<span class="group-hover:text-primary transition-colors">Grueso</span>
+</label>
+</div>
+</div>
+<!-- Precio -->
+<div class="flex flex-col gap-4">
+<h3 class="font-label-lg text-primary border-b border-soft-pink pb-2">Precio</h3>
+<div class="px-2">
+<!-- Mock Slider -->
+<div class="h-1 w-full bg-surface-container-highest rounded-full relative mb-4">
+<div class="absolute left-0 right-[40%] h-full bg-primary rounded-full"></div>
+<div class="absolute left-0 top-1/2 -translate-y-1/2 w-4 h-4 bg-white border-2 border-primary rounded-full shadow cursor-pointer"></div>
+<div class="absolute right-[40%] top-1/2 -translate-y-1/2 w-4 h-4 bg-white border-2 border-primary rounded-full shadow cursor-pointer"></div>
+</div>
+<div class="flex justify-between font-label-sm text-on-surface-variant">
+<span>$0</span>
+<span>$50+</span>
+</div>
+</div>
+</div>
+</aside>
+<!-- Product Grid -->
+<div class="col-span-1 lg:col-span-9">
+<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+<!-- Product Card 1 -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm hover:shadow-[0_8px_20px_-8px_rgba(76,29,149,0.15)] border border-soft-pink overflow-hidden transition-all duration-300 group flex flex-col">
+<div class="relative aspect-square bg-surface-container-low overflow-hidden">
+<span class="absolute top-2 left-2 bg-soft-pink text-primary font-label-sm px-2 py-1 rounded-md z-10">Nuevo</span>
+<button class="absolute top-2 right-2 p-1.5 bg-white/80 backdrop-blur rounded-full text-on-surface-variant hover:text-fuchsia-accent z-10 transition-colors">
+<span class="material-symbols-outlined text-[20px]">favorite</span>
+</button>
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A beautifully lit studio shot of a skein of soft, plush Amigurumi yarn in a delicate pastel lilac color. The yarn is neatly wound and sits on a clean, light cream surface. Soft, diffused lighting highlights the fuzzy, voluminous texture of the chenille material. The overall aesthetic is modern, bright, and inviting, fitting a premium lifestyle craft boutique." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDDzs_mpFFHL7Y6ooUo710zGWL3W4bt4pgTFxbiX7cpDTl9c0NZLAQaL5I99ZYfCXByCATJLrKVkTHnrW-J7jwpuEB4UzfgW50Tyn_sWragFR9LydxaXDG0HVgXSveYueBeCnm0I2RhC0mzI1_AxkQ185HB89Q7Xh570SwJhLdmoT7ZQC2TZ4suUAD5duLOAtlwpteoERhYDk_EAURvOoaqC1X8Q8kIB_d0U0EdXLUE9GqzQBWINTBS"/>
+</div>
+<div class="p-4 flex flex-col gap-2 flex-grow">
+<div>
+<h4 class="font-label-lg text-on-surface truncate">Hilo Amigurumi</h4>
+<p class="font-label-sm text-on-surface-variant">Círculo 125g</p>
+</div>
+<div class="font-headline-sm text-primary mt-auto">Desde $4.50</div>
+<div class="flex gap-1 mt-1">
+<div class="w-3 h-3 rounded-full bg-red-400"></div>
+<div class="w-3 h-3 rounded-full bg-yellow-400"></div>
+<div class="w-3 h-3 rounded-full bg-green-400"></div>
+<div class="w-3 h-3 rounded-full bg-blue-400"></div>
+<div class="w-3 h-3 rounded-full bg-surface-variant flex items-center justify-center text-[8px]">+5</div>
+</div>
+<button class="mt-3 w-full bg-primary-fixed text-on-primary-fixed-variant hover:bg-primary-container hover:text-on-primary-container font-label-sm py-2 rounded-full transition-colors flex items-center justify-center gap-1 border border-transparent hover:border-primary/20">
+<span class="material-symbols-outlined text-[16px]">add</span> Agregar
+                            </button>
+</div>
+</div>
+<!-- Product Card 2 -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm hover:shadow-[0_8px_20px_-8px_rgba(76,29,149,0.15)] border border-soft-pink overflow-hidden transition-all duration-300 group flex flex-col">
+<div class="relative aspect-square bg-surface-container-low overflow-hidden">
+<span class="absolute top-2 left-2 bg-secondary-container text-on-secondary-container font-label-sm px-2 py-1 rounded-md z-10">Más vendido</span>
+<button class="absolute top-2 right-2 p-1.5 bg-white/80 backdrop-blur rounded-full text-on-surface-variant hover:text-fuchsia-accent z-10 transition-colors">
+<span class="material-symbols-outlined text-[20px]">favorite</span>
+</button>
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A top-down, high-quality product photo of a thick, chunky Chenille yarn skein in a vibrant deep purple shade. It rests elegantly on a pristine white background with a very subtle, soft shadow. The lighting is crisp and even, emphasizing the velvety, luxurious texture of the thick fibers. The style is clean, e-commerce ready, and sophisticated." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCHmZ-c0-TOtR2yXvWy9-2PX5zWP-O2nrI2zd9XuigJAPi5xfpvmIWJBsmyniHApQNMfeJxcvHzgjzcA7tQ_5uZ_hJUE-tTJNiXVaTAX6CI6xaYdC7WAP_w4wx10GTBy96a_azl7J_ci2xjhowVX0VoVLr_l2Q-LztjpDshXzxBP3omDizhNtrC86efzGvZYVHUtj7ippyphJjxQIaqrpOKvfABzlrl0fFZVyAYjYCGhntP7vX2hTJs"/>
+</div>
+<div class="p-4 flex flex-col gap-2 flex-grow">
+<div>
+<h4 class="font-label-lg text-on-surface truncate">Chenille Amigurumi</h4>
+<p class="font-label-sm text-on-surface-variant">100g - Hebra 3mm</p>
+</div>
+<div class="font-headline-sm text-primary mt-auto">Desde $6.00</div>
+<div class="flex gap-1 mt-1">
+<div class="w-3 h-3 rounded-full bg-purple-500"></div>
+<div class="w-3 h-3 rounded-full bg-pink-300"></div>
+<div class="w-3 h-3 rounded-full bg-white border border-outline-variant"></div>
+</div>
+<button class="mt-3 w-full bg-primary-fixed text-on-primary-fixed-variant hover:bg-primary-container hover:text-on-primary-container font-label-sm py-2 rounded-full transition-colors flex items-center justify-center gap-1 border border-transparent hover:border-primary/20">
+<span class="material-symbols-outlined text-[16px]">add</span> Agregar
+                            </button>
+</div>
+</div>
+<!-- Product Card 3 -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm hover:shadow-[0_8px_20px_-8px_rgba(76,29,149,0.15)] border border-soft-pink overflow-hidden transition-all duration-300 group flex flex-col">
+<div class="relative aspect-square bg-surface-container-low overflow-hidden">
+<button class="absolute top-2 right-2 p-1.5 bg-white/80 backdrop-blur rounded-full text-on-surface-variant hover:text-fuchsia-accent z-10 transition-colors">
+<span class="material-symbols-outlined text-[20px]">favorite</span>
+</button>
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A beautiful, detailed macro shot of premium Trapillo (t-shirt yarn) rolled into a neat cylinder. The color is a soft, muted seafoam green. The fabric texture is clearly visible, showing slight stretch and smooth edges. The lighting is soft and natural, casting delicate shadows that give a sense of depth and quality, consistent with a high-end craft brand." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDl7_g3Em5wrGNFYwrVrr4rLUZvAJEBBQfwjRMllLhiRwfDAEn6cGuOnnp1yjXs0Z3EU_mpdwH0_I_OH_fq2IQhCUNZgC5B5Dy-IX_KXKXCfguQKx_-kcZr93ktcj77jN14c1TYQ3veiy8A2CJsMqL5MirlqWAJv_S5YeP_Othwiw_QY29wYj2Hx9AiHj4IiKj0Gj3OGUxeM2eVUMLw75fnTT4l2s_9umJjic0AcNp3aWiqijelN8e0"/>
+</div>
+<div class="p-4 flex flex-col gap-2 flex-grow">
+<div>
+<h4 class="font-label-lg text-on-surface truncate">Trapillo Premium</h4>
+<p class="font-label-sm text-on-surface-variant">500g - Colores lisos</p>
+</div>
+<div class="font-headline-sm text-primary mt-auto">Desde $4.25</div>
+<div class="flex gap-1 mt-1">
+<div class="w-3 h-3 rounded-full bg-teal-300"></div>
+<div class="w-3 h-3 rounded-full bg-gray-400"></div>
+<div class="w-3 h-3 rounded-full bg-rose-200"></div>
+</div>
+<button class="mt-3 w-full bg-primary-fixed text-on-primary-fixed-variant hover:bg-primary-container hover:text-on-primary-container font-label-sm py-2 rounded-full transition-colors flex items-center justify-center gap-1 border border-transparent hover:border-primary/20">
+<span class="material-symbols-outlined text-[16px]">add</span> Agregar
+                            </button>
+</div>
+</div>
+<!-- Product Card 4 -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm hover:shadow-[0_8px_20px_-8px_rgba(76,29,149,0.15)] border border-soft-pink overflow-hidden transition-all duration-300 group flex flex-col">
+<div class="relative aspect-square bg-surface-container-low overflow-hidden">
+<button class="absolute top-2 right-2 p-1.5 bg-white/80 backdrop-blur rounded-full text-on-surface-variant hover:text-fuchsia-accent z-10 transition-colors">
+<span class="material-symbols-outlined text-[20px]">favorite</span>
+</button>
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A clean, minimalist product photograph of mercerized cotton yarn. The yarn ball is a vibrant, saturated cyan blue, tightly wound with a slight sheen indicating its mercerized finish. It sits against an off-white, light cream background. The image is brightly lit, showcasing the fine threads and vibrant color, perfect for a modern e-commerce catalog." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD53GRm8AeJl9hkxHOUtk0HRvsQMhoIiu3HPnB6EmgpuQzxLLQeH3d2GkMHVGcMc6UOiXnDxp2iQtIt9oGoL3hfIfBYlqvS1zoQkoZkNLxlcjacOjgZm2_Dd9eV3JAHvFtyCpJlizByS5GrD2725Z2e2Iwt1jBthtGAuF_Bpu7oRTLRRjfRd92hXTMrG6AMa02jqkhF8m_gcaYszZzFf5AOF-kRXidpYFTAu2Txmc0xkmAgbCXWMKYM"/>
+</div>
+<div class="p-4 flex flex-col gap-2 flex-grow">
+<div>
+<h4 class="font-label-lg text-on-surface truncate">Algodón Mercerizado</h4>
+<p class="font-label-sm text-on-surface-variant">100g - Brillante</p>
+</div>
+<div class="font-headline-sm text-primary mt-auto">Desde $2.75</div>
+<div class="flex gap-1 mt-1">
+<div class="w-3 h-3 rounded-full bg-cyan-500"></div>
+<div class="w-3 h-3 rounded-full bg-orange-400"></div>
+</div>
+<button class="mt-3 w-full bg-primary-fixed text-on-primary-fixed-variant hover:bg-primary-container hover:text-on-primary-container font-label-sm py-2 rounded-full transition-colors flex items-center justify-center gap-1 border border-transparent hover:border-primary/20">
+<span class="material-symbols-outlined text-[16px]">add</span> Agregar
+                            </button>
+</div>
+</div>
+</div>
+<!-- Pagination -->
+<div class="flex justify-between items-center mt-12 border-t border-soft-pink pt-6">
+<span class="font-label-sm text-on-surface-variant">Mostrando 1-12 de 120 productos</span>
+<div class="flex items-center gap-1">
+<button class="w-8 h-8 flex items-center justify-center text-on-surface-variant hover:bg-surface-container-low rounded-full transition-colors" disabled="">
+<span class="material-symbols-outlined text-[18px]">chevron_left</span>
+</button>
+<button class="w-8 h-8 flex items-center justify-center bg-primary text-on-primary rounded-full font-label-sm">1</button>
+<button class="w-8 h-8 flex items-center justify-center text-on-surface hover:bg-surface-container-low rounded-full font-label-sm transition-colors">2</button>
+<button class="w-8 h-8 flex items-center justify-center text-on-surface hover:bg-surface-container-low rounded-full font-label-sm transition-colors">3</button>
+<span class="text-on-surface-variant px-1">...</span>
+<button class="w-8 h-8 flex items-center justify-center text-on-surface hover:bg-surface-container-low rounded-full font-label-sm transition-colors">10</button>
+<button class="w-8 h-8 flex items-center justify-center text-on-surface hover:bg-surface-container-low rounded-full transition-colors">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container dark:bg-surface-dark text-primary dark:text-primary-fixed font-body-md w-full mt-section-gap border-t border-soft-pink dark:border-primary-container flat no shadows">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-gutter px-margin-mobile md:px-margin-desktop py-stack-lg max-w-container-max mx-auto">
+<div class="flex flex-col gap-2">
+<span class="font-headline-md text-primary">Madejitas.sv</span>
+<span class="text-sm text-on-surface-variant mt-2">© 2024 Madejitas SV. Todos los derechos reservados.</span>
+</div>
+<div class="flex flex-col gap-2">
+<a class="text-on-surface-variant dark:text-on-tertiary-container hover:text-fuchsia-accent transition-colors underline-offset-4 hover:underline" href="#">Políticas de Envío</a>
+</div>
+<div class="flex flex-col gap-2">
+<a class="text-on-surface-variant dark:text-on-tertiary-container hover:text-fuchsia-accent transition-colors underline-offset-4 hover:underline" href="#">Términos y Condiciones</a>
+</div>
+<div class="flex flex-col gap-2">
+<a class="text-on-surface-variant dark:text-on-tertiary-container hover:text-fuchsia-accent transition-colors underline-offset-4 hover:underline" href="#">Preguntas Frecuentes</a>
+<a class="text-on-surface-variant dark:text-on-tertiary-container hover:text-fuchsia-accent transition-colors underline-offset-4 hover:underline" href="#">Guía de Hilados</a>
+</div>
+</div>
+</footer>
+<!-- BottomNavBar (Visible on Mobile, Hidden on Desktop) -->
+<nav class="md:hidden bg-surface dark:bg-surface-dark text-primary dark:text-primary-fixed font-label-sm fixed bottom-0 w-full z-50 rounded-t-xl border-t border-soft-pink dark:border-primary-container shadow-[0_-4px_6px_-1px_rgba(76,29,149,0.1)] shadow-lg">
+<div class="flex justify-around items-center h-16 px-2 pb-safe">
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-tertiary-container active:bg-primary-container/50" href="#">
+<span class="material-symbols-outlined mb-1">home</span>
+<span>Inicio</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary-container dark:bg-primary text-on-primary-container dark:text-on-primary rounded-full px-4 py-1 active:bg-primary-container/50 Active: scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined mb-1">grid_view</span>
+<span>Catálogo</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-tertiary-container active:bg-primary-container/50" href="#">
+<span class="material-symbols-outlined mb-1">search</span>
+<span>Buscar</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-tertiary-container active:bg-primary-container/50" href="#">
+<span class="material-symbols-outlined mb-1">receipt_long</span>
+<span>Cotización</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-tertiary-container active:bg-primary-container/50" href="#">
+<span class="material-symbols-outlined mb-1">chat</span>
+<span>WhatsApp</span>
+</a>
+</div>
+</nav>
+</body></html>

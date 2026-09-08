@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Madejitas.sv - Generar Cotización</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+                "inverse-surface": "#342e37",
+                "on-secondary": "#ffffff",
+                "surface-bright": "#fff7fe",
+                "error": "#ba1a1a",
+                "inverse-on-surface": "#f8edf9",
+                "on-error-container": "#93000a",
+                "primary-fixed": "#f1dbff",
+                "on-primary-fixed-variant": "#661aa3",
+                "error-container": "#ffdad6",
+                "tertiary-fixed-dim": "#cec4ca",
+                "on-background": "#1f1a22",
+                "surface-container-highest": "#e9dfeb",
+                "surface": "#fff7fe",
+                "lilac": "#C084FC",
+                "on-secondary-fixed": "#29074a",
+                "surface-tint": "#803abd",
+                "deep-purple": "#4C1D95",
+                "fuchsia-accent": "#D946EF",
+                "primary": "#500088",
+                "tertiary-container": "#50494e",
+                "surface-container-lowest": "#ffffff",
+                "primary-fixed-dim": "#dfb7ff",
+                "on-surface": "#1f1a22",
+                "surface-container": "#f5ebf6",
+                "on-surface-variant": "#4c4452",
+                "cream-bg": "#FFFBF7",
+                "tertiary-fixed": "#eae0e6",
+                "background": "#fff7fe",
+                "inverse-primary": "#dfb7ff",
+                "on-tertiary-fixed-variant": "#4b454a",
+                "surface-variant": "#e9dfeb",
+                "on-secondary-container": "#614283",
+                "surface-container-high": "#efe5f1",
+                "on-primary-fixed": "#2d0050",
+                "on-tertiary-fixed": "#1f1a1e",
+                "violet": "#7C3AED",
+                "outline-variant": "#cfc2d4",
+                "outline": "#7e7383",
+                "tertiary": "#393337",
+                "secondary-fixed-dim": "#dbb8ff",
+                "on-secondary-fixed-variant": "#573878",
+                "surface-container-low": "#fbf0fc",
+                "primary-container": "#6b21a8",
+                "surface-dark": "#2E1065",
+                "on-tertiary-container": "#c2b9be",
+                "on-tertiary": "#ffffff",
+                "on-primary": "#ffffff",
+                "secondary": "#6f5092",
+                "soft-pink": "#FCE7F3",
+                "on-primary-container": "#d7a8ff",
+                "surface-dim": "#e1d7e2",
+                "secondary-fixed": "#efdbff",
+                "secondary-container": "#d9b5ff",
+                "on-error": "#ffffff"
+        },
+        "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+        },
+        "spacing": {
+                "stack-sm": "0.5rem",
+                "section-gap": "5rem",
+                "margin-desktop": "2.5rem",
+                "stack-md": "1rem",
+                "gutter": "1.5rem",
+                "stack-lg": "2rem",
+                "margin-mobile": "1rem",
+                "container-max": "1280px"
+        },
+        "fontFamily": {
+                "body-md": [
+                        "Plus Jakarta Sans"
+                ],
+                "headline-md": [
+                        "Plus Jakarta Sans"
+                ],
+                "body-lg": [
+                        "Plus Jakarta Sans"
+                ],
+                "label-sm": [
+                        "Plus Jakarta Sans"
+                ],
+                "display-lg": [
+                        "Plus Jakarta Sans"
+                ],
+                "headline-lg": [
+                        "Plus Jakarta Sans"
+                ],
+                "display-lg-mobile": [
+                        "Plus Jakarta Sans"
+                ],
+                "label-lg": [
+                        "Plus Jakarta Sans"
+                ]
+        },
+        "fontSize": {
+                "body-md": [
+                        "16px",
+                        {
+                                "lineHeight": "1.6",
+                                "fontWeight": "400"
+                        }
+                ],
+                "headline-md": [
+                        "24px",
+                        {
+                                "lineHeight": "1.3",
+                                "fontWeight": "600"
+                        }
+                ],
+                "body-lg": [
+                        "18px",
+                        {
+                                "lineHeight": "1.6",
+                                "fontWeight": "400"
+                        }
+                ],
+                "label-sm": [
+                        "12px",
+                        {
+                                "lineHeight": "1.2",
+                                "fontWeight": "500"
+                        }
+                ],
+                "display-lg": [
+                        "48px",
+                        {
+                                "lineHeight": "1.1",
+                                "letterSpacing": "-0.02em",
+                                "fontWeight": "700"
+                        }
+                ],
+                "headline-lg": [
+                        "32px",
+                        {
+                                "lineHeight": "1.2",
+                                "fontWeight": "600"
+                        }
+                ],
+                "display-lg-mobile": [
+                        "32px",
+                        {
+                                "lineHeight": "1.2",
+                                "fontWeight": "700"
+                        }
+                ],
+                "label-lg": [
+                        "14px",
+                        {
+                                "lineHeight": "1.2",
+                                "letterSpacing": "0.01em",
+                                "fontWeight": "600"
+                        }
+                ]
+        }
+},
+    },
+  }
+</script>
+<style>
+  body {
+    background-image: linear-gradient(to bottom, #FFFBF7, #fff7fe);
+    background-attachment: fixed;
+  }
+</style>
+</head>
+<body class="font-body-md text-on-surface min-h-screen flex flex-col antialiased">
+<!-- TopAppBar -->
+<header class="bg-surface/80 backdrop-blur-md text-primary font-headline-md text-headline-md docked full-width top-0 sticky z-50 border-b border-soft-pink shadow-sm">
+<div class="flex justify-between items-center px-margin-mobile md:px-margin-desktop py-4 max-w-container-max mx-auto">
+<a class="font-display-lg text-display-lg-mobile md:text-display-lg text-primary tracking-tight" href="#">Madejitas.sv</a>
+<!-- Desktop Navigation -->
+<nav class="hidden md:flex gap-6">
+<a class="text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-container-low transition-all scale-95 duration-150 ease-in-out px-3 py-2 rounded-lg" href="#">Inicio</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-container-low transition-all scale-95 duration-150 ease-in-out px-3 py-2 rounded-lg" href="#">Catálogo</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-container-low transition-all scale-95 duration-150 ease-in-out px-3 py-2 rounded-lg" href="#">Novedades</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-container-low transition-all scale-95 duration-150 ease-in-out px-3 py-2 rounded-lg" href="#">Inspiración</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-container-low transition-all scale-95 duration-150 ease-in-out px-3 py-2 rounded-lg" href="#">Sobre nosotros</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-container-low transition-all scale-95 duration-150 ease-in-out px-3 py-2 rounded-lg" href="#">Contacto</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="text-primary hover:bg-surface-container-low p-2 rounded-full transition-all scale-95 duration-150 ease-in-out">
+<span class="material-symbols-outlined">search</span>
+</button>
+<button class="text-primary hover:bg-surface-container-low p-2 rounded-full transition-all scale-95 duration-150 ease-in-out relative">
+<span class="material-symbols-outlined">favorite</span>
+</button>
+<button class="text-primary hover:bg-surface-container-low p-2 rounded-full transition-all scale-95 duration-150 ease-in-out relative">
+<span class="material-symbols-outlined">shopping_bag</span>
+<span class="absolute top-0 right-0 bg-fuchsia-accent text-white text-[10px] font-bold rounded-full h-4 w-4 flex items-center justify-center">3</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Main Canvas -->
+<main class="flex-grow pt-stack-lg pb-section-gap px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto w-full">
+<div class="mb-8">
+<nav aria-label="Breadcrumb" class="flex text-sm text-on-surface-variant mb-4">
+<ol class="inline-flex items-center space-x-1 md:space-x-3">
+<li class="inline-flex items-center">
+<a class="inline-flex items-center hover:text-primary transition-colors" href="#">
+              Inicio
+            </a>
+</li>
+<li>
+<div class="flex items-center">
+<span class="material-symbols-outlined text-[16px] mx-1">chevron_right</span>
+<a class="hover:text-primary transition-colors ml-1 md:ml-2" href="#">Cotización</a>
+</div>
+</li>
+</ol>
+</nav>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-start">
+<!-- Form Section -->
+<div class="lg:col-span-4 space-y-8 order-2 lg:order-1">
+<div>
+<h1 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary mb-2 flex items-center gap-2">
+            ¡Tu proyecto ya está tomando forma! <span class="text-fuchsia-accent">💜</span>
+</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">Completa tus datos para generar tu cotización.</p>
+</div>
+<form class="space-y-6 bg-white p-6 rounded-2xl shadow-[0_4px_20px_-4px_rgba(76,29,149,0.08)] border border-lilac/20 relative overflow-hidden">
+<div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-lilac to-fuchsia-accent"></div>
+<div class="space-y-4">
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface-variant mb-1" for="nombre">Nombre completo</label>
+<input class="w-full bg-cream-bg border border-lilac/30 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-deep-purple focus:border-deep-purple transition-colors text-on-surface font-body-md placeholder:text-on-surface-variant/50" id="nombre" name="nombre" placeholder="María López" type="text"/>
+</div>
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface-variant mb-1" for="whatsapp">WhatsApp</label>
+<div class="flex">
+<span class="inline-flex items-center px-3 rounded-l-lg border border-r-0 border-lilac/30 bg-surface-container-low text-on-surface-variant text-sm">
+                  +503
+                </span>
+<input class="flex-1 min-w-0 block w-full px-4 py-3 rounded-none rounded-r-lg bg-cream-bg border border-lilac/30 focus:outline-none focus:ring-2 focus:ring-deep-purple focus:border-deep-purple transition-colors text-on-surface font-body-md placeholder:text-on-surface-variant/50" id="whatsapp" name="whatsapp" placeholder="0000 0000" type="tel"/>
+</div>
+</div>
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface-variant mb-1" for="ciudad">Ciudad / Departamento</label>
+<input class="w-full bg-cream-bg border border-lilac/30 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-deep-purple focus:border-deep-purple transition-colors text-on-surface font-body-md placeholder:text-on-surface-variant/50" id="ciudad" name="ciudad" placeholder="San Salvador" type="text"/>
+</div>
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface-variant mb-1" for="comentario">Comentario opcional</label>
+<textarea class="w-full bg-cream-bg border border-lilac/30 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-deep-purple focus:border-deep-purple transition-colors text-on-surface font-body-md placeholder:text-on-surface-variant/50 resize-none" id="comentario" name="comentario" placeholder="Es para un regalo de cumpleaños..." rows="3"></textarea>
+</div>
+</div>
+<button class="w-full bg-deep-purple text-white font-label-lg text-label-lg py-4 rounded-full hover:bg-primary transition-all active:scale-95 shadow-md shadow-deep-purple/20 flex items-center justify-center gap-2" type="button">
+<span class="material-symbols-outlined text-[20px]">receipt_long</span>
+            Generar mi cotización
+          </button>
+</form>
+</div>
+<!-- Preview Section -->
+<div class="lg:col-span-8 order-1 lg:order-2">
+<div class="bg-white rounded-2xl shadow-[0_8px_30px_-4px_rgba(76,29,149,0.1)] border border-lilac/20 p-8 md:p-12 relative overflow-hidden">
+<!-- Document Header -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 pb-6 border-b border-soft-pink">
+<div>
+<div class="font-display-lg text-display-lg-mobile md:text-headline-lg text-primary tracking-tight mb-1">Madejitas.sv</div>
+<div class="text-on-surface-variant text-sm">Tu boutique de hilados</div>
+</div>
+<div class="mt-4 md:mt-0 text-left md:text-right">
+<h2 class="font-headline-md text-headline-md text-on-surface mb-1">Cotización</h2>
+<div class="text-on-surface-variant text-sm flex flex-col md:items-end">
+<span>Nº MDJ-000125</span>
+<span>Fecha: 18/05/2024</span>
+</div>
+</div>
+</div>
+<!-- Customer Data -->
+<div class="mb-10 text-sm grid grid-cols-1 md:grid-cols-2 gap-4 bg-surface-container-low p-4 rounded-xl border border-lilac/10">
+<div>
+<span class="text-on-surface-variant block mb-1">Cliente:</span>
+<span class="font-medium text-on-surface">María López</span>
+</div>
+<div>
+<span class="text-on-surface-variant block mb-1">WhatsApp:</span>
+<span class="font-medium text-on-surface">+503 6018 2667</span>
+</div>
+<div class="md:col-span-2">
+<span class="text-on-surface-variant block mb-1">Ciudad / Departamento:</span>
+<span class="font-medium text-on-surface">San Salvador</span>
+</div>
+</div>
+<!-- Table -->
+<div class="overflow-x-auto mb-8">
+<table class="w-full text-left border-collapse min-w-[600px]">
+<thead>
+<tr class="border-b-2 border-primary/20 text-on-surface-variant font-label-sm text-label-sm uppercase tracking-wider">
+<th class="py-3 px-2 font-medium">Producto</th>
+<th class="py-3 px-2 font-medium">Color</th>
+<th class="py-3 px-2 font-medium">Código</th>
+<th class="py-3 px-2 font-medium text-center">Cant.</th>
+<th class="py-3 px-2 font-medium text-right">Precio</th>
+<th class="py-3 px-2 font-medium text-right">Subtotal</th>
+</tr>
+</thead>
+<tbody class="text-sm font-body-md text-on-surface divide-y divide-soft-pink/50">
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="py-4 px-2 flex items-center gap-3">
+<img class="w-10 h-10 rounded bg-cream-bg object-cover border border-lilac/20" data-alt="A small thumbnail image of a ball of light pink amigurumi yarn, soft lighting, isolated on white background, premium quality" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBsVa94ctxSdhGeSJGArbuWpFP_3hYU5T1NZvFaPAYoMvXtfZWBWV7QwPKpg1yCoxK9WOHmLuqth-BA9s88frl05l-_84RYcHjpG7tyut0mTFXAOWCSK2BmEt1UpzoGkt3WFlPgMOH_oj5T3G07IZMAd9Vbkfo-8M-yUtwJBvnVzo9VXKdY2_SOqw6LrH4NrrE1WVd48CjHLTkHmVD9HMrVFhfHasfWwiLzKyc5Yv34e6pGkfcFkSdK"/>
+<span class="font-medium">Hilo Amigurumi</span>
+</td>
+<td class="py-4 px-2">Chantilly</td>
+<td class="py-4 px-2 text-on-surface-variant">7563</td>
+<td class="py-4 px-2 text-center">2</td>
+<td class="py-4 px-2 text-right">$4.50</td>
+<td class="py-4 px-2 text-right font-medium">$9.00</td>
+</tr>
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="py-4 px-2 flex items-center gap-3">
+<img class="w-10 h-10 rounded bg-cream-bg object-cover border border-lilac/20" data-alt="A small thumbnail image of a ball of light purple chenille yarn, soft lighting, isolated on white background, premium quality" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAw28XzrLXWkcKcCideIdo0D6q4oMwxE7z1hseuHkMwA7Y1uvDOdcpxwSB9dTwj7dqMDzmPRTfF1t_1IhmmiAjbrTYSGTSF-nzir8oswR-xPXLYvgxWoi-VbCrg9CrfbfgLZpC9I7nKQNh29w1nALzfbYw556sUKnTjhAUReGpE8DJYHo3BP_VRZDVfBpPsXxp_KPzHRKtxGV7HeSPuc5Zw3AcbI87EZtaJKl2h5CzPB4Niiqq5zDeD"/>
+<span class="font-medium">Chenille Amigurumi</span>
+</td>
+<td class="py-4 px-2">Lila Candy</td>
+<td class="py-4 px-2 text-on-surface-variant">6006</td>
+<td class="py-4 px-2 text-center">1</td>
+<td class="py-4 px-2 text-right">$6.00</td>
+<td class="py-4 px-2 text-right font-medium">$6.00</td>
+</tr>
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="py-4 px-2 flex items-center gap-3">
+<img class="w-10 h-10 rounded bg-cream-bg object-cover border border-lilac/20" data-alt="A small thumbnail image of a skein of pastel pink premium t-shirt yarn, soft lighting, isolated on white background, premium quality" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAqqB6zUx9mN5kfYr3J4-4SDu3rTZrzBKAAMrgfEk2OrY8tUlnJp1kL_nnaOcxEfSZAVIaS2KmmeYqv0q_Dow5ZQQf8KCtxDvnyRxbNywsHw64hvFJr_DGnPRZAXpsyskfqkLS7AXUdbCmkBTbODX8NSgwO3x9YI9bBvcD7aboFeYf_28geuNsbxqrLWeTyapCM9gXuGW7LOtyhbCZMaxioZs1VFrBT6PlpRH-jYnc3fJNyxdYs9Kv8"/>
+<span class="font-medium">Trapillo Premium</span>
+</td>
+<td class="py-4 px-2">Rosa Pastel</td>
+<td class="py-4 px-2 text-on-surface-variant">-</td>
+<td class="py-4 px-2 text-center">2</td>
+<td class="py-4 px-2 text-right">$4.25</td>
+<td class="py-4 px-2 text-right font-medium">$8.50</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Summary -->
+<div class="flex flex-col items-end mb-10 border-t border-soft-pink pt-6">
+<div class="w-full md:w-64 space-y-3">
+<div class="flex justify-between text-on-surface-variant text-sm">
+<span>Subtotal</span>
+<span>$23.50</span>
+</div>
+<div class="flex justify-between text-on-surface-variant text-sm">
+<span>Envío estimado <span class="material-symbols-outlined text-[14px] align-middle ml-1 text-primary cursor-help" title="Costo estimado para San Salvador">info</span></span>
+<span>$3.50</span>
+</div>
+<div class="flex justify-between items-end border-t border-lilac/20 pt-3">
+<span class="font-headline-md text-headline-md text-on-surface">Total estimado</span>
+<span class="font-headline-lg text-headline-lg text-primary">$27.00</span>
+</div>
+</div>
+<p class="text-[11px] text-on-surface-variant mt-4 italic text-right">
+              * Precios y existencias sujetos a confirmación.
+            </p>
+</div>
+<!-- Actions -->
+<div class="flex flex-col sm:flex-row justify-end gap-4 mt-8 pt-6 border-t border-dashed border-soft-pink">
+<button class="px-6 py-3 rounded-full border-2 border-lilac text-primary font-label-lg text-label-lg hover:bg-lilac/10 transition-colors flex items-center justify-center gap-2" type="button">
+<span class="material-symbols-outlined text-[20px]">download</span>
+              Descargar PDF
+            </button>
+<button class="px-6 py-3 rounded-full bg-[#25D366] text-white font-label-lg text-label-lg hover:bg-[#1da851] transition-all shadow-md shadow-[#25D366]/20 flex items-center justify-center gap-2 active:scale-95" type="button">
+<span class="material-symbols-outlined text-[20px]">send</span>
+              Enviar por WhatsApp
+            </button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden bg-surface dark:bg-surface-dark text-primary dark:text-primary-fixed font-label-sm text-label-sm text-primary fixed bottom-0 w-full z-50 rounded-t-xl border-t border-soft-pink dark:border-primary-container shadow-[0_-4px_6px_-1px_rgba(76,29,149,0.1)] shadow-lg flex justify-around items-center h-16 px-2 pb-safe">
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-tertiary-container active:bg-primary-container/50 Active: scale-90 transition-transform w-16" href="#">
+<span class="material-symbols-outlined mb-1">home</span>
+<span>Inicio</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-tertiary-container active:bg-primary-container/50 Active: scale-90 transition-transform w-16" href="#">
+<span class="material-symbols-outlined mb-1">grid_view</span>
+<span>Catálogo</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-tertiary-container active:bg-primary-container/50 Active: scale-90 transition-transform w-16" href="#">
+<span class="material-symbols-outlined mb-1">search</span>
+<span>Buscar</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary-container dark:bg-primary text-on-primary-container dark:text-on-primary rounded-full px-4 py-1 active:bg-primary-container/50 Active: scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined mb-1">receipt_long</span>
+<span>Cotización</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-tertiary-container active:bg-primary-container/50 Active: scale-90 transition-transform w-16" href="#">
+<span class="material-symbols-outlined mb-1">chat</span>
+<span>WhatsApp</span>
+</a>
+</nav>
+<!-- Footer -->
+<footer class="bg-surface-container dark:bg-surface-dark text-primary dark:text-primary-fixed font-body-md text-body-md font-headline-md text-primary w-full mt-section-gap border-t border-soft-pink dark:border-primary-container flat no shadows">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-gutter px-margin-mobile md:px-margin-desktop py-stack-lg max-w-container-max mx-auto">
+<div class="col-span-1 md:col-span-1 mb-6 md:mb-0">
+<h3 class="font-headline-md text-primary mb-4">Madejitas.sv</h3>
+<p class="text-on-surface-variant text-sm">Tu tienda de confianza para encontrar los mejores materiales para tus proyectos de tejido y manualidades.</p>
+</div>
+<div class="col-span-1">
+<h4 class="font-label-lg font-bold text-on-surface mb-4 uppercase tracking-wider">Enlaces útiles</h4>
+<ul class="space-y-2">
+<li><a class="text-on-surface-variant dark:text-on-tertiary-container hover:text-fuchsia-accent transition-colors underline-offset-4 hover:underline" href="#">Políticas de Envío</a></li>
+<li><a class="text-on-surface-variant dark:text-on-tertiary-container hover:text-fuchsia-accent transition-colors underline-offset-4 hover:underline" href="#">Términos y Condiciones</a></li>
+<li><a class="text-on-surface-variant dark:text-on-tertiary-container hover:text-fuchsia-accent transition-colors underline-offset-4 hover:underline" href="#">Preguntas Frecuentes</a></li>
+<li><a class="text-on-surface-variant dark:text-on-tertiary-container hover:text-fuchsia-accent transition-colors underline-offset-4 hover:underline" href="#">Guía de Hilados</a></li>
+</ul>
+</div>
+<div class="col-span-1">
+<h4 class="font-label-lg font-bold text-on-surface mb-4 uppercase tracking-wider">Contacto</h4>
+<ul class="space-y-2 text-on-surface-variant">
+<li class="flex items-center gap-2"><span class="material-symbols-outlined text-[18px]">mail</span> info@madejitas.sv</li>
+<li class="flex items-center gap-2"><span class="material-symbols-outlined text-[18px]">phone_iphone</span> +503 6018 2667</li>
+<li class="flex items-center gap-2"><span class="material-symbols-outlined text-[18px]">location_on</span> San Salvador, El Salvador</li>
+</ul>
+</div>
+<div class="col-span-1">
+<h4 class="font-label-lg font-bold text-on-surface mb-4 uppercase tracking-wider">Síguenos</h4>
+<div class="flex gap-4">
+<a class="text-primary hover:text-fuchsia-accent transition-colors bg-surface-container-high p-2 rounded-full" href="#">
+<span class="material-symbols-outlined">photo_camera</span>
+</a>
+<a class="text-primary hover:text-fuchsia-accent transition-colors bg-surface-container-high p-2 rounded-full" href="#">
+<span class="material-symbols-outlined">qr_code_2</span>
+</a>
+</div>
+</div>
+</div>
+<div class="border-t border-soft-pink mt-4 py-4 text-center text-sm text-on-surface-variant">
+      © 2024 Madejitas SV. Todos los derechos reservados.
+    </div>
+</footer>
+</body></html>

@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+
+<html lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Madejitas.sv - Mi Cotización</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "inverse-surface": "#342e37",
+                        "on-secondary": "#ffffff",
+                        "surface-bright": "#fff7fe",
+                        "error": "#ba1a1a",
+                        "inverse-on-surface": "#f8edf9",
+                        "on-error-container": "#93000a",
+                        "primary-fixed": "#f1dbff",
+                        "on-primary-fixed-variant": "#661aa3",
+                        "error-container": "#ffdad6",
+                        "tertiary-fixed-dim": "#cec4ca",
+                        "on-background": "#1f1a22",
+                        "surface-container-highest": "#e9dfeb",
+                        "surface": "#fff7fe",
+                        "lilac": "#C084FC",
+                        "on-secondary-fixed": "#29074a",
+                        "surface-tint": "#803abd",
+                        "deep-purple": "#4C1D95",
+                        "fuchsia-accent": "#D946EF",
+                        "primary": "#500088",
+                        "tertiary-container": "#50494e",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-fixed-dim": "#dfb7ff",
+                        "on-surface": "#1f1a22",
+                        "surface-container": "#f5ebf6",
+                        "on-surface-variant": "#4c4452",
+                        "cream-bg": "#FFFBF7",
+                        "tertiary-fixed": "#eae0e6",
+                        "background": "#fff7fe",
+                        "inverse-primary": "#dfb7ff",
+                        "on-tertiary-fixed-variant": "#4b454a",
+                        "surface-variant": "#e9dfeb",
+                        "on-secondary-container": "#614283",
+                        "surface-container-high": "#efe5f1",
+                        "on-primary-fixed": "#2d0050",
+                        "on-tertiary-fixed": "#1f1a1e",
+                        "violet": "#7C3AED",
+                        "outline-variant": "#cfc2d4",
+                        "outline": "#7e7383",
+                        "tertiary": "#393337",
+                        "secondary-fixed-dim": "#dbb8ff",
+                        "on-secondary-fixed-variant": "#573878",
+                        "surface-container-low": "#fbf0fc",
+                        "primary-container": "#6b21a8",
+                        "surface-dark": "#2E1065",
+                        "on-tertiary-container": "#c2b9be",
+                        "on-tertiary": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "secondary": "#6f5092",
+                        "soft-pink": "#FCE7F3",
+                        "on-primary-container": "#d7a8ff",
+                        "surface-dim": "#e1d7e2",
+                        "secondary-fixed": "#efdbff",
+                        "secondary-container": "#d9b5ff",
+                        "on-error": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-sm": "0.5rem",
+                        "section-gap": "5rem",
+                        "margin-desktop": "2.5rem",
+                        "stack-md": "1rem",
+                        "gutter": "1.5rem",
+                        "stack-lg": "2rem",
+                        "margin-mobile": "1rem",
+                        "container-max": "1280px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Plus Jakarta Sans"],
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "body-lg": ["Plus Jakarta Sans"],
+                        "label-sm": ["Plus Jakarta Sans"],
+                        "display-lg": ["Plus Jakarta Sans"],
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "display-lg-mobile": ["Plus Jakarta Sans"],
+                        "label-lg": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "body-md": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "1.3", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "label-sm": ["12px", { "lineHeight": "1.2", "fontWeight": "500" }],
+                        "display-lg": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-lg": ["32px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                        "display-lg-mobile": ["32px", { "lineHeight": "1.2", "fontWeight": "700" }],
+                        "label-lg": ["14px", { "lineHeight": "1.2", "letterSpacing": "0.01em", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface antialiased min-h-screen flex flex-col">
+<!-- TopAppBar -->
+<header class="bg-surface/80 dark:bg-surface-dark/80 backdrop-blur-md docked full-width top-0 sticky z-50 border-b border-soft-pink dark:border-primary-container shadow-sm hidden md:block">
+<div class="flex justify-between items-center px-margin-mobile md:px-margin-desktop py-4 max-w-container-max mx-auto">
+<a class="font-display-lg text-display-lg-mobile md:text-display-lg text-primary dark:text-primary-fixed tracking-tight" href="#">Madejitas.sv</a>
+<nav class="hidden lg:flex items-center gap-6">
+<a class="text-on-surface-variant dark:text-on-tertiary-container hover:text-primary transition-colors hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-all px-2 py-1 rounded-md" href="#">Inicio</a>
+<a class="text-on-surface-variant dark:text-on-tertiary-container hover:text-primary transition-colors hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-all px-2 py-1 rounded-md" href="#">Catálogo</a>
+<a class="text-on-surface-variant dark:text-on-tertiary-container hover:text-primary transition-colors hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-all px-2 py-1 rounded-md" href="#">Novedades</a>
+<a class="text-on-surface-variant dark:text-on-tertiary-container hover:text-primary transition-colors hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-all px-2 py-1 rounded-md" href="#">Inspiración</a>
+<a class="text-on-surface-variant dark:text-on-tertiary-container hover:text-primary transition-colors hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-all px-2 py-1 rounded-md" href="#">Sobre nosotros</a>
+<a class="text-on-surface-variant dark:text-on-tertiary-container hover:text-primary transition-colors hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-all px-2 py-1 rounded-md" href="#">Contacto</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="text-on-surface-variant hover:text-primary transition-colors scale-95 duration-150 ease-in-out">
+<span class="material-symbols-outlined">search</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors scale-95 duration-150 ease-in-out">
+<span class="material-symbols-outlined">favorite</span>
+</button>
+<button class="text-primary font-bold border-b-2 border-primary pb-1 flex items-center gap-1">
+<span class="material-symbols-outlined">shopping_bag</span>
+<span class="bg-primary text-on-primary rounded-full px-2 py-0.5 text-xs">6</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas (Glassmorphism Overlay Style for this view) -->
+<main class="flex-grow flex justify-center items-start pt-8 pb-section-gap px-margin-mobile md:px-margin-desktop bg-surface-container-low/50 relative">
+<!-- Subtle Background Glow -->
+<div class="absolute inset-0 pointer-events-none overflow-hidden">
+<div class="absolute top-0 left-1/4 w-96 h-96 bg-lilac/10 rounded-full blur-3xl"></div>
+<div class="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-soft-pink/20 rounded-full blur-3xl"></div>
+</div>
+<!-- Quote Modal/Panel -->
+<div class="w-full max-w-4xl bg-surface-container-lowest rounded-xl shadow-[0_8px_30px_rgb(76,29,149,0.1)] border border-soft-pink/50 flex flex-col relative z-10 overflow-hidden">
+<!-- Header -->
+<div class="px-8 py-6 border-b border-soft-pink flex justify-between items-center bg-surface-bright">
+<div class="flex items-center gap-2">
+<h1 class="font-headline-lg text-headline-lg text-on-surface">Mi cotización</h1>
+<span class="bg-primary-container text-on-primary-container font-label-sm text-label-sm px-2 py-1 rounded-full">6</span>
+</div>
+<button class="text-on-surface-variant hover:text-primary transition-colors flex items-center gap-1 font-label-sm text-label-sm">
+                    Cerrar <span class="material-symbols-outlined text-sm">close</span>
+</button>
+</div>
+<!-- Content Area: Split Layout -->
+<div class="flex flex-col md:flex-row flex-grow">
+<!-- Items List -->
+<div class="flex-grow p-8 md:pr-4 overflow-y-auto max-h-[614px] space-y-6">
+<!-- Item 1 -->
+<div class="flex gap-4 items-start pb-6 border-b border-surface-variant">
+<div class="w-20 h-20 rounded-lg overflow-hidden border border-soft-pink flex-shrink-0 bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="A close-up photograph of a skein of soft pastel purple amigurumi yarn, resting on a clean white surface with bright, modern light-mode studio lighting. The texture of the yarn is highly detailed, conveying a premium lifestyle boutique feel." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBiz2bYyW0Nheo2Xty9bgjWCo9xkjXiwxgeGdrIo9Hp6egqQljCbRIuTuTCFTob5hQTZWFlgzAPSV0E3nFCJ5IDKuCnu9EIbNxoucPWbfno6SMkeTKoruH8eT95XRDqx-24arulyatmeAZI03RbHee8ho1JN7XrYrb3Y9EQ5eBMni7ZPVQeZ6Pfr7wYucx8u06OrRSvPHubUR8od7YD765--sae2hSBOqGdWCaOgPLRk_oURdYuR7hp"/>
+</div>
+<div class="flex-grow flex flex-col justify-between h-20">
+<div>
+<h3 class="font-label-lg text-label-lg text-on-surface">Hilo Amigurumi</h3>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Color: Chantilly (7563)</p>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center border border-outline-variant rounded-full px-2 py-1 bg-surface-bright">
+<button class="text-on-surface-variant hover:text-primary px-1 material-symbols-outlined text-sm">remove</button>
+<span class="font-label-sm text-label-sm w-6 text-center">2</span>
+<button class="text-on-surface-variant hover:text-primary px-1 material-symbols-outlined text-sm">add</button>
+</div>
+<div class="text-right">
+<p class="font-label-lg text-label-lg text-on-surface">$9.00</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">$4.50 c/u</p>
+</div>
+</div>
+</div>
+<button class="text-on-surface-variant hover:text-error transition-colors mt-1">
+<span class="material-symbols-outlined text-lg">delete</span>
+</button>
+</div>
+<!-- Item 2 -->
+<div class="flex gap-4 items-start pb-6 border-b border-surface-variant">
+<div class="w-20 h-20 rounded-lg overflow-hidden border border-soft-pink flex-shrink-0 bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="A close-up photograph of a skein of chenille amigurumi yarn in a soft lilac color, resting on a clean white surface with bright, modern light-mode studio lighting. The texture is fuzzy and soft, conveying a premium lifestyle boutique feel." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBUIkZDwzCyG848fxSzQWzLP_jneb9_3NVJgmbRn6IIgUB3K5ckJwmzjps7z8pvjMBIp9rWBgPbLBauCZTBkWOPxTvU0o30KZpoW1ezmJfWmhR-nkw0W7ExmE3nUslRz8tn3DzADWy0LrJgRnbcoMk6TPYpEUhddrDXVzxEN3Z-BADhc41bi7z4g1mBlmuB9xAtostRlEcUfKts9YeP6B9IrlKxCoTVTZDKcuk1TBJ_tkHf76W77cjH"/>
+</div>
+<div class="flex-grow flex flex-col justify-between h-20">
+<div>
+<h3 class="font-label-lg text-label-lg text-on-surface">Chenille Amigurumi</h3>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Color: Lila Candy (6000)</p>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center border border-outline-variant rounded-full px-2 py-1 bg-surface-bright">
+<button class="text-on-surface-variant hover:text-primary px-1 material-symbols-outlined text-sm">remove</button>
+<span class="font-label-sm text-label-sm w-6 text-center">1</span>
+<button class="text-on-surface-variant hover:text-primary px-1 material-symbols-outlined text-sm">add</button>
+</div>
+<div class="text-right">
+<p class="font-label-lg text-label-lg text-on-surface">$6.00</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">$6.00 c/u</p>
+</div>
+</div>
+</div>
+<button class="text-on-surface-variant hover:text-error transition-colors mt-1">
+<span class="material-symbols-outlined text-lg">delete</span>
+</button>
+</div>
+<!-- Item 3 -->
+<div class="flex gap-4 items-start pb-6 border-b border-surface-variant">
+<div class="w-20 h-20 rounded-lg overflow-hidden border border-soft-pink flex-shrink-0 bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="A close-up photograph of a spool of premium pink trapillo yarn, resting on a clean white surface with bright, modern light-mode studio lighting. The thick fabric texture is visible, conveying a premium lifestyle boutique feel." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLHrt8JklNAnxqczSXUaFZosOTb6k7MRkEb0uZdmF3HIPXcC8AT8M5OY-72BMrQRBoFIn3brAaMybITDZZysH9Kt4W48-nWclSl4_ksmRw0OjjhhJTy-i2cmhbeakc4jNMd224Ib85-FM4E1K7yXoAYP9eI0as8kWj0y9LZN2jcbch6z5RNPrgx48JGEFPGs2kvxJMvS95HW8WI1HIGPP_H9_vu7TGMOtOH7kMv2dTic-qjd9vZ_Ch"/>
+</div>
+<div class="flex-grow flex flex-col justify-between h-20">
+<div>
+<h3 class="font-label-lg text-label-lg text-on-surface">Trapillo Premium</h3>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Color: Rosa Pastel</p>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center border border-outline-variant rounded-full px-2 py-1 bg-surface-bright">
+<button class="text-on-surface-variant hover:text-primary px-1 material-symbols-outlined text-sm">remove</button>
+<span class="font-label-sm text-label-sm w-6 text-center">2</span>
+<button class="text-on-surface-variant hover:text-primary px-1 material-symbols-outlined text-sm">add</button>
+</div>
+<div class="text-right">
+<p class="font-label-lg text-label-lg text-on-surface">$8.50</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">$4.25 c/u</p>
+</div>
+</div>
+</div>
+<button class="text-on-surface-variant hover:text-error transition-colors mt-1">
+<span class="material-symbols-outlined text-lg">delete</span>
+</button>
+</div>
+</div>
+<!-- Summary Sidebar -->
+<div class="w-full md:w-80 bg-surface-container-low p-8 border-t md:border-t-0 md:border-l border-soft-pink flex flex-col justify-between">
+<div>
+<div class="space-y-4 mb-8">
+<div class="flex justify-between items-center text-on-surface-variant">
+<span class="font-body-md text-body-md">Subtotal</span>
+<span class="font-body-md text-body-md">$23.50</span>
+</div>
+<div class="flex justify-between items-center text-on-surface-variant">
+<span class="font-body-md text-body-md flex items-center gap-1">Envío estimado <span class="material-symbols-outlined text-sm text-primary">info</span></span>
+<span class="font-body-md text-body-md">$3.50</span>
+</div>
+<div class="h-px w-full bg-outline-variant my-4"></div>
+<div class="flex justify-between items-center text-primary">
+<span class="font-headline-md text-headline-md">Total estimado</span>
+<span class="font-headline-md text-headline-md">$27.00</span>
+</div>
+</div>
+<div class="bg-surface-bright p-4 rounded-lg border border-soft-pink mb-8 flex items-start gap-3">
+<span class="material-symbols-outlined text-primary mt-0.5">info</span>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Esta cotización no representa una compra ni reserva de inventario. Es un paso previo para confirmar disponibilidad.</p>
+</div>
+</div>
+<div class="space-y-3">
+<button class="w-full bg-deep-purple hover:bg-primary text-white font-label-lg text-label-lg py-3 px-6 rounded-full transition-colors flex justify-center items-center gap-2 shadow-md">
+<span class="material-symbols-outlined">receipt_long</span> Preparar mi cotización
+                        </button>
+<button class="w-full bg-transparent hover:bg-surface-variant text-primary border border-primary font-label-lg text-label-lg py-3 px-6 rounded-full transition-colors flex justify-center items-center">
+                            Seguir comprando
+                        </button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="fixed bottom-0 w-full z-50 rounded-t-xl bg-surface dark:bg-surface-dark border-t border-soft-pink dark:border-primary-container shadow-[0_-4px_6px_-1px_rgba(76,29,149,0.1)] md:hidden">
+<div class="flex justify-around items-center h-16 px-2 pb-safe">
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-tertiary-container hover:bg-primary-container/50 p-2 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-sm text-label-sm mt-1">Inicio</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-tertiary-container hover:bg-primary-container/50 p-2 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">grid_view</span>
+<span class="font-label-sm text-label-sm mt-1">Catálogo</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-tertiary-container hover:bg-primary-container/50 p-2 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">search</span>
+<span class="font-label-sm text-label-sm mt-1">Buscar</span>
+</a>
+<!-- Active State -->
+<a class="flex flex-col items-center justify-center bg-primary-container dark:bg-primary text-on-primary-container dark:text-on-primary rounded-full px-4 py-1 scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined">receipt_long</span>
+<span class="font-label-sm text-label-sm mt-1">Cotización</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-tertiary-container hover:bg-primary-container/50 p-2 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">chat</span>
+<span class="font-label-sm text-label-sm mt-1">WhatsApp</span>
+</a>
+</div>
+</nav>
+<!-- Footer -->
+<footer class="w-full mt-section-gap border-t border-soft-pink dark:border-primary-container bg-surface-container dark:bg-surface-dark flat no shadows hidden md:block">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-gutter px-margin-mobile md:px-margin-desktop py-stack-lg max-w-container-max mx-auto">
+<div class="col-span-1">
+<h2 class="font-headline-md text-primary mb-4">Madejitas.sv</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mb-4">Transformando tus ideas en arte con materiales de primera calidad.</p>
+</div>
+<div class="col-span-3 flex flex-wrap gap-8 justify-end">
+<a class="font-body-md text-body-md text-on-surface-variant dark:text-on-tertiary-container hover:text-fuchsia-accent transition-colors underline-offset-4 hover:underline" href="#">Políticas de Envío</a>
+<a class="font-body-md text-body-md text-on-surface-variant dark:text-on-tertiary-container hover:text-fuchsia-accent transition-colors underline-offset-4 hover:underline" href="#">Términos y Condiciones</a>
+<a class="font-body-md text-body-md text-on-surface-variant dark:text-on-tertiary-container hover:text-fuchsia-accent transition-colors underline-offset-4 hover:underline" href="#">Preguntas Frecuentes</a>
+<a class="font-body-md text-body-md text-on-surface-variant dark:text-on-tertiary-container hover:text-fuchsia-accent transition-colors underline-offset-4 hover:underline" href="#">Guía de Hilados</a>
+</div>
+</div>
+<div class="text-center py-4 border-t border-surface-variant">
+<p class="font-body-md text-body-md text-on-surface-variant">© 2024 Madejitas SV. Todos los derechos reservados.</p>
+</div>
+</footer>
+</body></html>
