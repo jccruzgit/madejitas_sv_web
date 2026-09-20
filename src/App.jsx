@@ -7,7 +7,6 @@ import {
   ChevronDown,
   ChevronRight,
   CircleHelp,
-  Download,
   Filter,
   Heart,
   Mail,
@@ -24,13 +23,13 @@ import {
   Send,
   ShoppingBag,
   Sparkles,
-  Star,
   Trash2,
   Truck,
   Users,
   X,
 } from "lucide-react";
-import { categories, money, products } from "./data";
+import { categories, money, products as demoProducts } from "./data";
+import { catalogClient, catalogConfigError, fetchPublishedCatalog } from "./catalogApi";
 
 const PHONE = "50360182667";
 const storage = {
@@ -71,10 +70,35 @@ function go(path, params = {}) {
 
 function App() {
   const route = useRoute();
+  const [catalog, setCatalog] = useState(() => ({
+    status: catalogClient || catalogConfigError ? "loading" : "ready",
+    products: catalogClient ? [] : demoProducts,
+    error: null,
+  }));
+  const [catalogRetry, setCatalogRetry] = useState(0);
   const [cart, setCart] = useState(() => storage.get("madejitas-quote", []));
   const [favorites, setFavorites] = useState(() => storage.get("madejitas-favorites", []));
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [toast, setToast] = useState("");
+
+  useEffect(() => {
+    if (catalogConfigError) {
+      setCatalog({ status: "error", products: [], error: "Falta la URL o la clave publicable de Supabase." });
+      return undefined;
+    }
+    if (!catalogClient) return undefined;
+
+    let active = true;
+    setCatalog((current) => ({ ...current, status: "loading", error: null }));
+    fetchPublishedCatalog()
+      .then((products) => {
+        if (active) setCatalog({ status: "ready", products, error: null });
+      })
+      .catch((error) => {
+        if (active) setCatalog({ status: "error", products: [], error: error.message });
+      });
+    return () => { active = false; };
+  }, [catalogRetry]);
 
   useEffect(() => storage.set("madejitas-quote", cart), [cart]);
   useEffect(() => storage.set("madejitas-favorites", favorites), [favorites]);
@@ -94,8 +118,17 @@ function App() {
   }, [route.page, route.query.toString()]);
 
   const addItem = (product, color, quantity = 1) => {
-    if (quantity < 1) return;
+    if (quantity < 1) return false;
+    if (color.stockQuantity === 0) {
+      setToast("Este color está agotado por el momento");
+      return false;
+    }
     const key = `${product.id}-${color.code}`;
+    const currentQuantity = cart.find((item) => item.key === key)?.quantity || 0;
+    if (color.stockQuantity != null && currentQuantity + quantity > color.stockQuantity) {
+      setToast(`Solo hay ${color.stockQuantity} unidades disponibles de ${color.name}`);
+      return false;
+    }
     setCart((current) => {
       const existing = current.find((item) => item.key === key);
       if (existing) {
@@ -106,19 +139,19 @@ function App() {
       return [...current, { key, productId: product.id, colorCode: color.code, quantity }];
     });
     setToast(`${product.name} agregado a tu cotización`);
+    return true;
   };
 
   const addSelections = (product, quantities) => {
     let added = 0;
     product.colors.forEach((color) => {
       const quantity = quantities[color.code] || 0;
-      if (quantity > 0) {
-        addItem(product, color, quantity);
-        added += quantity;
+      if (quantity > 0 && color.stockQuantity !== 0) {
+        if (addItem(product, color, quantity)) added += quantity;
       }
     });
     if (!added) {
-      addItem(product, product.colors[0]);
+      setToast("Selecciona al menos un color disponible");
     } else {
       setToast(`${added} madejita${added > 1 ? "s" : ""} agregada${added > 1 ? "s" : ""}`);
     }
@@ -126,7 +159,17 @@ function App() {
 
   const updateItem = (key, quantity) => {
     if (quantity <= 0) setCart((current) => current.filter((item) => item.key !== key));
-    else setCart((current) => current.map((item) => (item.key === key ? { ...item, quantity } : item)));
+    else {
+      const item = cart.find((candidate) => candidate.key === key);
+      const color = catalog.products
+        .find((product) => product.id === item?.productId)
+        ?.colors.find((candidate) => candidate.code === item?.colorCode);
+      if (color?.stockQuantity != null && quantity > (item?.quantity || 0) && quantity > color.stockQuantity) {
+        setToast(`Solo hay ${color.stockQuantity} unidades disponibles de ${color.name}`);
+        return;
+      }
+      setCart((current) => current.map((candidate) => candidate.key === key ? { ...candidate, quantity } : candidate));
+    }
   };
 
   const toggleFavorite = (id) => {
@@ -138,18 +181,29 @@ function App() {
   const cartDetails = useMemo(
     () =>
       cart.flatMap((item) => {
-        const product = products.find((candidate) => candidate.id === item.productId);
+        const product = catalog.products.find((candidate) => candidate.id === item.productId);
         const color = product?.colors.find((candidate) => candidate.code === item.colorCode);
         return product && color ? [{ ...item, product, color }] : [];
       }),
-    [cart],
+    [cart, catalog.products],
   );
-  const count = cart.reduce((total, item) => total + item.quantity, 0);
+  const count = cartDetails.reduce((total, item) => total + item.quantity, 0);
 
   let content;
-  if (route.page === "catalog") {
+  if (route.page !== "info" && catalog.status !== "ready") {
+    content = (
+      <main className="catalog-status page-width" role="status">
+        {catalog.status === "loading" ? (
+          <><div className="loading-mark" /><h1>Cargando catálogo</h1></>
+        ) : (
+          <><h1>No pudimos cargar el catálogo</h1><p>Intenta de nuevo en unos momentos.</p><button className="button outline" onClick={() => setCatalogRetry((value) => value + 1)}>Reintentar</button></>
+        )}
+      </main>
+    );
+  } else if (route.page === "catalog") {
     content = (
       <CatalogPage
+        products={catalog.products}
         initialQuery={route.query.get("q") || ""}
         favoriteOnly={route.query.get("favorites") === "1"}
         favorites={favorites}
@@ -158,14 +212,16 @@ function App() {
       />
     );
   } else if (route.page === "product") {
-    const product = products.find((item) => item.id === route.slug) || products[1];
-    content = (
+    const product = catalog.products.find((item) => item.id === route.slug);
+    content = product ? (
       <ProductPage
         product={product}
         isFavorite={favorites.includes(product.id)}
         toggleFavorite={toggleFavorite}
         addSelections={addSelections}
       />
+    ) : (
+      <main className="catalog-status page-width"><h1>Producto no disponible</h1><button className="button outline" onClick={() => go("catalog")}>Volver al catálogo</button></main>
     );
   } else if (route.page === "quote") {
     content = <QuotePage items={cartDetails} updateItem={updateItem} />;
@@ -174,6 +230,7 @@ function App() {
   } else {
     content = (
       <HomePage
+        products={catalog.products}
         favorites={favorites}
         toggleFavorite={toggleFavorite}
         addItem={addItem}
@@ -295,7 +352,7 @@ function Header({ route, count, openCart }) {
   );
 }
 
-function HomePage({ favorites, toggleFavorite, addItem }) {
+function HomePage({ products, favorites, toggleFavorite, addItem }) {
   const carouselRef = useRef(null);
 
   return (
@@ -313,8 +370,8 @@ function HomePage({ favorites, toggleFavorite, addItem }) {
             <button className="button light" onClick={() => go("catalog", { sort: "new" })}>Ver novedades</button>
           </div>
           <div className="hero-trust">
-            <TrustStat strong="+500" label="Productos" />
-            <TrustStat strong="+10k" label="Clientes felices" />
+            <TrustStat strong={String(products.length)} label="Productos" />
+            <TrustStat strong={String(categories.length)} label="Categorías" />
             <TrustStat icon={<Truck />} label="Envíos a todo el país" />
             <TrustStat icon={<MessageCircle />} label="Atención por WhatsApp" />
           </div>
@@ -356,6 +413,7 @@ function HomePage({ favorites, toggleFavorite, addItem }) {
             {products.slice(0, 6).map((product) => (
               <ProductCard key={product.id} product={product} favorite={favorites.includes(product.id)} toggleFavorite={toggleFavorite} addItem={addItem} />
             ))}
+            {!products.length && <p>Pronto habrá nuevos materiales para explorar.</p>}
           </div>
           <div className="value-row" id="about">
             <ValueItem icon={<Sparkles />} label="Emprendimiento salvadoreño" />
@@ -378,6 +436,7 @@ function ValueItem({ icon, label }) {
 }
 
 function ProductCard({ product, favorite, toggleFavorite, addItem }) {
+  const firstAvailableColor = product.colors.find((color) => color.stockQuantity !== 0);
   return (
     <article className="product-card">
       <div className="product-media" onClick={() => go(`product/${product.id}`)} role="button" tabIndex="0">
@@ -399,21 +458,31 @@ function ProductCard({ product, favorite, toggleFavorite, addItem }) {
         <div className="swatches" aria-label="Colores disponibles">
           {product.colors.slice(0, 5).map((color) => <span key={color.code} style={{ backgroundColor: color.hex }} title={color.name} />)}
         </div>
-        <button className="button soft full" onClick={() => addItem(product, product.colors[0])}><Plus size={17} /> Agregar</button>
+        <button className="button soft full" disabled={!firstAvailableColor} onClick={() => addItem(product, firstAvailableColor)}><Plus size={17} /> {firstAvailableColor ? "Agregar" : "Agotado"}</button>
       </div>
     </article>
   );
 }
 
-function CatalogPage({ initialQuery, favoriteOnly, favorites, toggleFavorite, addItem }) {
+function CatalogPage({ products, initialQuery, favoriteOnly, favorites, toggleFavorite, addItem }) {
   const route = useRoute();
+  const maxPrice = Math.max(15, ...products.map((product) => Math.ceil(product.price)));
+  const availableCategories = [...new Set([...categories.map((item) => item.name), ...products.map((product) => product.category)])];
+  const availableBrands = [...new Set(products.map((product) => product.brand))];
+  const availableThicknesses = [...new Set(products.map((product) => product.thickness))];
   const [search, setSearch] = useState(initialQuery);
   const [category, setCategory] = useState(route.query.get("category") || "Todos");
   const [brand, setBrand] = useState("Todos");
   const [thickness, setThickness] = useState("Todos");
-  const [price, setPrice] = useState(15);
+  const [price, setPrice] = useState(maxPrice);
   const [sort, setSort] = useState(route.query.get("sort") === "new" ? "new" : "recent");
   const [filtersOpen, setFiltersOpen] = useState(false);
+
+  useEffect(() => {
+    setSearch(route.query.get("q") || "");
+    setCategory(route.query.get("category") || "Todos");
+    setSort(route.query.get("sort") === "new" ? "new" : "recent");
+  }, [route.query.toString()]);
 
   const filtered = useMemo(() => {
     const normalized = search.toLocaleLowerCase("es");
@@ -433,7 +502,7 @@ function CatalogPage({ initialQuery, favoriteOnly, favorites, toggleFavorite, ad
   }, [brand, category, favoriteOnly, favorites, price, search, sort, thickness]);
 
   const clearFilters = () => {
-    setSearch(""); setCategory("Todos"); setBrand("Todos"); setThickness("Todos"); setPrice(15);
+    setSearch(""); setCategory("Todos"); setBrand("Todos"); setThickness("Todos"); setPrice(maxPrice);
   };
 
   return (
@@ -464,13 +533,13 @@ function CatalogPage({ initialQuery, favoriteOnly, favorites, toggleFavorite, ad
       <div className="catalog-layout">
         <aside className={`filters ${filtersOpen ? "is-open" : ""}`}>
           <div className="filters-mobile-head"><strong>Filtrar catálogo</strong><button className="icon-button" onClick={() => setFiltersOpen(false)}><X /></button></div>
-          <FilterGroup title="Categorías" options={["Todos", ...categories.map((item) => item.name)]} value={category} onChange={setCategory} />
-          <FilterGroup title="Marca" options={["Todos", "Círculo", "Alize", "Pantera", "Madejitas"]} value={brand} onChange={setBrand} />
-          <FilterGroup title="Grosor" options={["Todos", "Súper fino", "Fino", "Medio", "Grueso", "Accesorio"]} value={thickness} onChange={setThickness} />
+          <FilterGroup title="Categorías" options={["Todos", ...availableCategories]} value={category} onChange={setCategory} />
+          <FilterGroup title="Marca" options={["Todos", ...availableBrands]} value={brand} onChange={setBrand} />
+          <FilterGroup title="Grosor" options={["Todos", ...availableThicknesses]} value={thickness} onChange={setThickness} />
           <div className="filter-group">
             <h3>Precio máximo</h3>
-            <input type="range" min="3" max="15" step="0.25" value={price} onChange={(event) => setPrice(Number(event.target.value))} />
-            <div className="range-label"><span>$3</span><strong>{money(price)}</strong></div>
+            <input type="range" min="0" max={maxPrice} step="0.25" value={price} onChange={(event) => setPrice(Number(event.target.value))} />
+            <div className="range-label"><span>$0</span><strong>{money(price)}</strong></div>
           </div>
           <button className="text-link" onClick={clearFilters}>Limpiar filtros</button>
           <button className="button primary full filters-apply" onClick={() => setFiltersOpen(false)}>Ver {filtered.length} resultados</button>
@@ -506,16 +575,22 @@ function FilterGroup({ title, options, value, onChange }) {
 
 function ProductPage({ product, isFavorite, toggleFavorite, addSelections }) {
   const [activeImage, setActiveImage] = useState(product.heroImage || product.image);
-  const [quantities, setQuantities] = useState({ [product.colors[0].code]: 1 });
+  const initialColor = product.colors.find((color) => color.stockQuantity !== 0);
+  const [quantities, setQuantities] = useState(initialColor ? { [initialColor.code]: 1 } : {});
   const totalSelected = Object.values(quantities).reduce((total, value) => total + value, 0);
+  const anyStockKnown = product.colors.some((color) => color.stockQuantity !== null && color.stockQuantity !== undefined);
 
   useEffect(() => {
     setActiveImage(product.heroImage || product.image);
-    setQuantities({ [product.colors[0].code]: 1 });
+    setQuantities(initialColor ? { [initialColor.code]: 1 } : {});
   }, [product]);
 
   const changeQuantity = (code, delta) => {
-    setQuantities((current) => ({ ...current, [code]: Math.max(0, (current[code] || 0) + delta) }));
+    const color = product.colors.find((candidate) => candidate.code === code);
+    setQuantities((current) => ({
+      ...current,
+      [code]: Math.min(color?.stockQuantity ?? Infinity, Math.max(0, (current[code] || 0) + delta)),
+    }));
   };
 
   return (
@@ -537,7 +612,7 @@ function ProductPage({ product, isFavorite, toggleFavorite, addSelections }) {
           </div>
         </div>
         <div className="product-info">
-          <div className="rating"><span>{product.brand.toUpperCase()}</span><i /><span className="stars"><Star fill="currentColor" /><Star fill="currentColor" /><Star fill="currentColor" /><Star fill="currentColor" /><Star fill="currentColor" /></span><span>(125 reseñas)</span></div>
+          <div className="rating"><span>{product.brand.toUpperCase()}</span></div>
           <h1>{product.name}</h1>
           <p className="product-subtitle">{product.detail}</p>
           <div className="detail-price">{money(product.price)} <small>Por unidad</small></div>
@@ -549,22 +624,22 @@ function ProductPage({ product, isFavorite, toggleFavorite, addSelections }) {
               <span><Check /> <b>Marca:</b> {product.brand}</span>
               <span><Truck /> <b>Entrega:</b> Todo El Salvador</span>
             </div>
-            <span className="stock-label"><Check /> En stock y listo para enviar</span>
+            <span className="stock-label"><Check /> {anyStockKnown ? "Consulta disponibilidad antes de confirmar" : "Disponibilidad por confirmar"}</span>
           </div>
           <div className="color-selector">
             <div className="selector-heading"><h2>Selecciona tus colores</h2><span>{product.colors.length} disponibles</span></div>
             <div className="color-grid">
               {product.colors.map((color) => (
-                <div className={`color-option ${(quantities[color.code] || 0) > 0 ? "selected" : ""}`} key={color.code}>
+                <div className={`color-option ${(quantities[color.code] || 0) > 0 ? "selected" : ""} ${color.stockQuantity === 0 ? "out-of-stock" : ""}`} key={color.code}>
                   <button className="color-identify" onClick={() => setActiveImage(color.image)}>
-                    <img src={color.image} alt="" /><span><strong>{color.name}</strong><small>{color.code}</small></span>
+                    <img src={color.image} alt="" /><span><strong>{color.name}</strong><small>{color.stockQuantity === 0 ? "Agotado" : color.code}</small></span>
                   </button>
-                  <Quantity value={quantities[color.code] || 0} decrement={() => changeQuantity(color.code, -1)} increment={() => changeQuantity(color.code, 1)} />
+                  <Quantity value={quantities[color.code] || 0} disabled={color.stockQuantity === 0} decrement={() => changeQuantity(color.code, -1)} increment={() => changeQuantity(color.code, 1)} />
                 </div>
               ))}
             </div>
           </div>
-          <button className="button primary full large" onClick={() => addSelections(product, quantities)}><ShoppingBag /> Agregar {totalSelected || 1} a mi cotización</button>
+          <button className="button primary full large" disabled={!totalSelected} onClick={() => addSelections(product, quantities)}><ShoppingBag /> Agregar {totalSelected} a mi cotización</button>
           <div className="detail-benefits">
             <ValueItem icon={<Sparkles />} label="Textura seleccionada" />
             <ValueItem icon={<Check />} label="Colores firmes" />
@@ -576,12 +651,12 @@ function ProductPage({ product, isFavorite, toggleFavorite, addSelections }) {
   );
 }
 
-function Quantity({ value, decrement, increment }) {
+function Quantity({ value, decrement, increment, disabled = false }) {
   return (
     <div className="quantity-control">
-      <button onClick={decrement} aria-label="Reducir cantidad"><Minus /></button>
+      <button disabled={disabled} onClick={decrement} aria-label="Reducir cantidad"><Minus /></button>
       <span>{value}</span>
-      <button onClick={increment} aria-label="Aumentar cantidad"><Plus /></button>
+      <button disabled={disabled} onClick={increment} aria-label="Aumentar cantidad"><Plus /></button>
     </div>
   );
 }
@@ -631,7 +706,6 @@ function QuotePage({ items, updateItem }) {
   const subtotal = items.reduce((total, item) => total + item.product.price * item.quantity, 0);
   const shipping = items.length ? 3.5 : 0;
   const total = subtotal + shipping;
-  const quoteNumber = `MDJ-${String(Date.now()).slice(-6)}`;
   const date = new Intl.DateTimeFormat("es-SV").format(new Date());
 
   useEffect(() => storage.set("madejitas-customer", customer), [customer]);
@@ -644,7 +718,7 @@ function QuotePage({ items, updateItem }) {
     document.querySelector(".quote-document")?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
   const whatsappMessage = encodeURIComponent([
-    "Hola Madejitas.sv, quiero confirmar esta cotización:",
+    "Hola Madejitas.sv, quiero solicitar una cotización:",
     ...items.map((item) => `• ${item.quantity} × ${item.product.name}, ${item.color.name} (${item.color.code}) — ${money(item.product.price * item.quantity)}`),
     `Total estimado: ${money(total)}`,
     `Cliente: ${customer.name || "Sin nombre"}`,
@@ -663,7 +737,7 @@ function QuotePage({ items, updateItem }) {
         <section className="quote-form-panel no-print">
           <p className="eyebrow dark">Último paso</p>
           <h1>Tu proyecto ya está tomando forma</h1>
-          <p>Completa tus datos para generar tu cotización.</p>
+          <p>Completa tus datos para preparar una vista previa de tu solicitud.</p>
           <form className="quote-form" onSubmit={generate}>
             <label>Nombre completo<input required name="name" value={customer.name} onChange={updateCustomer} placeholder="María López" /></label>
             <label>WhatsApp<div className="phone-field"><span>+503</span><input required name="phone" value={customer.phone} onChange={updateCustomer} placeholder="0000 0000" inputMode="tel" /></div></label>
@@ -673,14 +747,14 @@ function QuotePage({ items, updateItem }) {
           </form>
         </section>
         <section className={`quote-document ${submitted ? "generated" : ""}`}>
-          <div className="document-head"><div><div className="document-brand">Madejitas.sv</div><p>Tu boutique de hilados</p></div><div><h2>Cotización</h2><p>N° {quoteNumber}<br />Fecha: {date}</p></div></div>
+          <div className="document-head"><div><div className="document-brand">Madejitas.sv</div><p>Tu boutique de hilados</p></div><div><h2>Cotización</h2><p>Vista previa sin registrar<br />Fecha: {date}</p></div></div>
           <div className="customer-data"><div><small>Cliente</small><strong>{customer.name || "Tu nombre"}</strong></div><div><small>WhatsApp</small><strong>+503 {customer.phone || "0000 0000"}</strong></div><div><small>Ciudad / Departamento</small><strong>{customer.city || "Tu ciudad"}</strong></div></div>
           <div className="quote-table-wrap">
             <table className="quote-table"><thead><tr><th>Producto</th><th>Color</th><th>Código</th><th>Cant.</th><th>Precio</th><th>Subtotal</th></tr></thead><tbody>
               {items.map((item) => <tr key={item.key}><td><img src={item.color.image || item.product.image} alt="" /><span>{item.product.name}</span></td><td>{item.color.name}</td><td>{item.color.code}</td><td><span className="print-only">{item.quantity}</span><div className="no-print"><Quantity value={item.quantity} decrement={() => updateItem(item.key, item.quantity - 1)} increment={() => updateItem(item.key, item.quantity + 1)} /></div></td><td>{money(item.product.price)}</td><td>{money(item.product.price * item.quantity)}</td></tr>)}
             </tbody></table>
           </div>
-          <div className="document-summary"><div><span>Subtotal</span><span>{money(subtotal)}</span></div><div><span>Envío estimado</span><span>{money(shipping)}</span></div><div><strong>Total estimado</strong><strong>{money(total)}</strong></div><small>* Precios y existencias sujetos a confirmación.</small></div>
+          <div className="document-summary"><div><span>Subtotal</span><span>{money(subtotal)}</span></div><div><span>Envío estimado</span><span>{money(shipping)}</span></div><div><strong>Total estimado</strong><strong>{money(total)}</strong></div><small>* Precios y existencias sujetos a confirmación. Esta vista previa no reserva productos.</small></div>
           {customer.comment && <p className="document-comment"><strong>Comentario:</strong> {customer.comment}</p>}
           <div className="document-actions no-print">
             <button className="button outline" onClick={() => window.print()}><Printer /> Imprimir / PDF</button>

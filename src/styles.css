@@ -262,6 +262,13 @@ img {
   transform: translateY(-2px);
 }
 
+.button:disabled,
+.quantity-control button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
 .button.primary {
   background: var(--purple);
   color: #fff;
@@ -860,6 +867,36 @@ img {
   text-align: center;
 }
 
+.catalog-status {
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  text-align: center;
+}
+
+.catalog-status h1 {
+  margin: 0;
+  color: var(--purple-dark);
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+}
+
+.catalog-status p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.loading-mark {
+  width: 36px;
+  height: 36px;
+  border: 3px solid var(--line);
+  border-top-color: var(--purple);
+  border-radius: 50%;
+  animation: loadingSpin 800ms linear infinite;
+}
+
 .empty-state > svg {
   width: 46px;
   height: 46px;
@@ -1091,6 +1128,10 @@ img {
 .color-option.selected {
   border: 2px solid var(--purple);
   padding: 7px;
+}
+
+.color-option.out-of-stock {
+  opacity: 0.62;
 }
 
 .color-identify {
@@ -1786,6 +1827,10 @@ img {
 @keyframes heroReveal {
   from { opacity: 0; transform: scale(1.035); }
   to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes loadingSpin {
+  to { transform: rotate(360deg); }
 }
 
 @keyframes toastIn {

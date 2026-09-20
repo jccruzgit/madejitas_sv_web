@@ -7,9 +7,12 @@
     "dev": "vite --host 0.0.0.0",
     "build": "vite build",
     "preview": "vite preview --host 0.0.0.0",
+    "test": "node --test",
+    "check:catalog": "node scripts/catalog-browser-check.mjs",
     "check:visual": "node scripts/visual-check.mjs"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.116.0",
     "@vitejs/plugin-react": "latest",
     "lucide-react": "latest",
     "react": "latest",
