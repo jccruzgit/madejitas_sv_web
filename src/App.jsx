@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { lazy, Suspense, useEffect, useMemo, useRef, useState } from "react";
 import {
   ArrowLeft,
   ArrowRight,
@@ -30,6 +30,8 @@ import {
 } from "lucide-react";
 import { categories, money, products as demoProducts } from "./data";
 import { catalogClient, catalogConfigError, fetchPublishedCatalog } from "./catalogApi";
+
+const AdminPanel = lazy(() => import("./AdminPanel.jsx"));
 
 const PHONE = "50360182667";
 const storage = {
@@ -70,6 +72,7 @@ function go(path, params = {}) {
 
 function App() {
   const route = useRoute();
+  const inAdmin = route.page === "admin";
   const [catalog, setCatalog] = useState(() => ({
     status: catalogClient || catalogConfigError ? "loading" : "ready",
     products: catalogClient ? [] : demoProducts,
@@ -82,6 +85,7 @@ function App() {
   const [toast, setToast] = useState("");
 
   useEffect(() => {
+    if (inAdmin) return undefined;
     if (catalogConfigError) {
       setCatalog({ status: "error", products: [], error: "Falta la URL o la clave publicable de Supabase." });
       return undefined;
@@ -98,7 +102,7 @@ function App() {
         if (active) setCatalog({ status: "error", products: [], error: error.message });
       });
     return () => { active = false; };
-  }, [catalogRetry]);
+  }, [catalogRetry, inAdmin]);
 
   useEffect(() => storage.set("madejitas-quote", cart), [cart]);
   useEffect(() => storage.set("madejitas-favorites", favorites), [favorites]);
@@ -188,6 +192,10 @@ function App() {
     [cart, catalog.products],
   );
   const count = cartDetails.reduce((total, item) => total + item.quantity, 0);
+
+  if (inAdmin) {
+    return <Suspense fallback={<main className="catalog-status" role="status">Cargando administración...</main>}><AdminPanel onCatalogChanged={() => setCatalogRetry((value) => value + 1)} /></Suspense>;
+  }
 
   let content;
   if (route.page !== "info" && catalog.status !== "ready") {

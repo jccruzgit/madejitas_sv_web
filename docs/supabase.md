@@ -30,7 +30,8 @@ error con botón de reintento.
 - `product_variants`: colores y existencias por variante. `stock_quantity = NULL`
   significa que aún no se ha cargado inventario; `0` significa agotado.
 - `app_admins`: identidades autorizadas para editar el catálogo. Esta tabla
-  permanece vacía hasta configurar el panel administrativo.
+  permanece vacía hasta configurar el panel administrativo. Sigue los pasos de
+  [docs/admin.md](admin.md) para activarlo.
 - `quotes` y `quote_items`: estructura privada para la siguiente fase. Ningún
   visitante puede leer o escribir cotizaciones directamente.
 

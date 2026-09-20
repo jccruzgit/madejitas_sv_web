@@ -9,6 +9,7 @@
     "preview": "vite preview --host 0.0.0.0",
     "test": "node --test",
     "check:catalog": "node scripts/catalog-browser-check.mjs",
+    "check:admin": "node scripts/admin-browser-check.mjs",
     "check:visual": "node scripts/visual-check.mjs"
   },
   "dependencies": {
