@@ -32,15 +32,26 @@ error con botón de reintento.
 - `app_admins`: identidades autorizadas para editar el catálogo. Esta tabla
   permanece vacía hasta configurar el panel administrativo. Sigue los pasos de
   [docs/admin.md](admin.md) para activarlo.
-- `quotes` y `quote_items`: estructura privada para la siguiente fase. Ningún
-  visitante puede leer o escribir cotizaciones directamente.
+- `quotes` y `quote_items`: solicitudes privadas con precios y nombres guardados
+  como una instantánea. Ningún visitante puede leer o escribir las tablas
+  directamente.
 
-El público solo puede leer productos publicados y variantes activas. Las
-cotizaciones todavía se preparan localmente y se envían mediante un enlace de
-WhatsApp; **no quedan guardadas en Supabase**. Para guardarlas hay que añadir
-una función de servidor que recalcule precios y cantidades, genere el número
-definitivo y limite solicitudes abusivas. El costo de envío mostrado sigue
-siendo estimado.
+El público solo puede leer productos publicados y variantes activas. Para
+recibir cotizaciones, ejecuta también
+`supabase/migrations/20260920020000_submit_quotes.sql` en **SQL Editor**,
+después de las migraciones del catálogo y de imágenes. La función pública
+`submit_quote` delega en una función privada que valida las variantes,
+recalcula importes desde el catálogo, limita solicitudes y guarda la
+cotización junto con sus artículos en una sola transacción. El costo de envío
+de $3.50 sigue siendo estimado. La página devuelve una referencia `MDJ-...` y
+mantiene WhatsApp como canal de contacto. Sin Supabase configurado, solo
+genera una vista previa sin registrar.
+
+Las solicitudes aparecen en la pestaña **Cotizaciones** del panel privado.
+Antes de publicar el formulario para clientes reales, prepara una política de
+privacidad para los datos de contacto y un procedimiento periódico de respaldo
+y restauración. No se envía ninguna notificación automática al administrador;
+revisa la bandeja del panel con regularidad.
 
 ## Verificación
 
@@ -48,6 +59,8 @@ siendo estimado.
 npm run test
 npm run build
 npm run check:catalog
+npm run check:admin
+npm run check:quotes
 ```
 
 Para validar la conexión real, abre el catálogo y comprueba que aparecen los

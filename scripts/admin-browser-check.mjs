@@ -27,6 +27,13 @@ const otherProducts = Array.from({ length: 7 }, (_, index) => ({
   sort_order: index + 1,
   product_variants: [],
 }));
+const quote = {
+  id: "quote-test", quote_number: 42, customer_name: "Ana Perez",
+  customer_phone: "77778888", customer_city: "San Salvador",
+  customer_comment: "Entregar en la tarde", subtotal: "10.00", shipping: "3.50",
+  total: "13.50", status: "new", created_at: "2026-09-20T10:00:00Z",
+  quote_items: [{ id: 1, product_name: "Hilo de prueba", variant_name: "Turquesa", variant_code: "T01", quantity: 2, unit_price: "5.00", line_total: "10.00" }],
+};
 
 function fulfill(route, body, status = 200) {
   return route.fulfill({
@@ -71,6 +78,16 @@ try {
     if (request.method() === "OPTIONS") return fulfill(route, {});
     if (url.pathname === "/auth/v1/user") return fulfill(route, user);
     if (url.pathname === "/rest/v1/app_admins") return fulfill(route, { user_id: user.id });
+    if (url.pathname === "/rest/v1/quotes") {
+      if (request.method() === "PATCH") {
+        quote.status = request.postDataJSON().status;
+        return fulfill(route, { id: quote.id, status: quote.status });
+      }
+      return route.fulfill({ status: 200, headers: {
+        "access-control-allow-origin": "*", "access-control-allow-headers": "apikey,authorization,content-type,x-client-info,prefer",
+        "access-control-expose-headers": "content-range", "content-type": "application/json", "content-range": "0-0/1",
+      }, body: JSON.stringify([quote]) });
+    }
     if (url.pathname.startsWith("/storage/v1/object/catalog-images/catalog/") && ["POST", "PUT"].includes(request.method())) {
       return fulfill(route, { Key: url.pathname.replace("/storage/v1/object/", "") });
     }
@@ -141,6 +158,18 @@ try {
   const narrowOverflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
   if (narrowOverflow > 2) throw new Error(`Modal con desbordamiento horizontal: ${narrowOverflow}px`);
   await page.getByRole("dialog").getByRole("button", { name: "Cancelar" }).click();
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.getByRole("button", { name: "Cotizaciones", exact: true }).click();
+  await page.getByRole("heading", { name: "MDJ-000042" }).waitFor();
+  await page.screenshot({ path: fileURLToPath(new URL("../.screenshots/admin-quotes-desktop.png", import.meta.url)), fullPage: true });
+  await page.getByLabel("Estado de la solicitud").selectOption("reviewed");
+  await page.waitForFunction(() => document.querySelector(".admin-quote-detail .admin-status-label")?.textContent === "Revisada");
+  if (quote.status !== "reviewed") throw new Error("El nuevo estado no llego a la API.");
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.screenshot({ path: fileURLToPath(new URL("../.screenshots/admin-quotes-mobile.png", import.meta.url)), fullPage: true });
+  await page.setViewportSize({ width: 320, height: 700 });
+  const quoteOverflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
+  if (quoteOverflow > 2) throw new Error(`Cotizaciones con desbordamiento horizontal: ${quoteOverflow}px`);
   if (pageErrors.length) throw new Error(pageErrors.join("\n"));
   console.log("Panel admin simulado: acceso, edición, variante, imagen y móvil OK.");
 } finally {

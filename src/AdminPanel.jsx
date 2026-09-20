@@ -10,6 +10,7 @@ import {
 } from "./adminApi.js";
 import { emptyProduct, emptyVariant, productDraft, variantDraft } from "./adminModel.js";
 import { money } from "./data.js";
+import AdminQuotes from "./AdminQuotes.jsx";
 import "./admin.css";
 
 const LOCAL_IMAGES = [
@@ -186,6 +187,7 @@ export default function AdminPanel({ onCatalogChanged }) {
   const [feedback, setFeedback] = useState(null);
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("all");
+  const [view, setView] = useState("catalog");
 
   useEffect(() => {
     if (!catalogClient) {
@@ -413,11 +415,15 @@ export default function AdminPanel({ onCatalogChanged }) {
     <div className="admin-shell">
       <header className="admin-topbar">
         <div className="admin-topbar-inner">
-          <div><span className="admin-brand">Madejitas<span>.sv</span></span><span className="admin-topbar-divider" /><strong>Catálogo</strong></div>
+          <div><span className="admin-brand">Madejitas<span>.sv</span></span><span className="admin-topbar-divider" /><strong>{view === "quotes" ? "Cotizaciones" : "Catálogo"}</strong></div>
           <div className="admin-topbar-actions"><a href="#/home" className="admin-button secondary"><Eye size={17} /> <span>Ver sitio</span></a><button className="admin-icon-button" title="Cambiar contraseña" aria-label="Cambiar contraseña" onClick={() => setPasswordOpen(true)}><KeyRound size={19} /></button><button className="admin-icon-button" title="Cerrar sesión" aria-label="Cerrar sesión" onClick={signOut} disabled={authBusy || uploadCount > 0}><LogOut size={19} /></button></div>
         </div>
       </header>
-      <main className="admin-workspace">
+      <nav className="admin-view-tabs" aria-label="Secciones de administración">
+        <button className={view === "catalog" ? "active" : ""} onClick={() => setView("catalog")}>Catálogo</button>
+        <button className={view === "quotes" ? "active" : ""} onClick={() => { if (canLeave()) setView("quotes"); }}>Cotizaciones</button>
+      </nav>
+      {view === "quotes" ? <AdminQuotes /> : <main className="admin-workspace">
         <aside className="admin-sidebar">
           <div className="admin-sidebar-head"><div><h1>Productos</h1><span>{products.length} {products.length === 1 ? "ficha" : "fichas"} · {publishedCount} {publishedCount === 1 ? "publicada" : "publicadas"}</span></div><button className="admin-icon-button accent" title="Nuevo producto" aria-label="Nuevo producto" onClick={create} disabled={busy || uploadCount > 0}><Plus size={20} /></button></div>
           <div className="admin-search"><Search size={17} /><input value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Buscar producto" aria-label="Buscar producto" /></div>
@@ -474,7 +480,7 @@ export default function AdminPanel({ onCatalogChanged }) {
             </section>}
           </>}
         </section>
-      </main>
+      </main>}
       {variant && <VariantDialog draft={variant} setDraft={setVariant} onClose={closeVariant} onSave={saveVariant} onDelete={removeVariant} busy={busy || uploadCount > 0} error={variantError} mainImage={selectedProduct?.image_url} onUploadStart={() => setUploadCount((value) => value + 1)} onUploadEnd={() => setUploadCount((value) => value - 1)} onUploadError={setVariantError} />}
       {passwordOpen && <PasswordDialog onClose={() => setPasswordOpen(false)} onSaved={() => { setPasswordOpen(false); setFeedback({ type: "success", text: "Contraseña actualizada." }); }} />}
     </div>

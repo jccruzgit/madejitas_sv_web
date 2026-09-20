@@ -78,16 +78,16 @@
   display: grid;
   grid-template-columns: minmax(285px, 340px) minmax(0, 1fr);
   max-width: 1600px;
-  min-height: calc(100vh - 68px);
+  min-height: calc(100vh - 114px);
   margin: 0 auto;
 }
 
 .admin-sidebar {
   position: sticky;
-  top: 68px;
+  top: 114px;
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 68px);
+  height: calc(100vh - 114px);
   min-height: 380px;
   border-right: 1px solid #dfe8e2;
   background: #fff;
@@ -204,6 +204,41 @@
 .admin-return { display: inline-flex; align-items: center; gap: 6px; margin-top: 28px; color: #466d56; font-size: .85rem; font-weight: 700; text-decoration: none; }
 .admin-return:hover { text-decoration: underline; }
 
+.admin-view-tabs { display: flex; gap: 22px; height: 46px; padding: 0 max(30px, calc((100% - 1540px) / 2)); border-bottom: 1px solid #dfe8e2; background: #fff; }
+.admin-view-tabs button { border: 0; border-bottom: 2px solid transparent; background: transparent; color: #66776d; font-size: .84rem; font-weight: 700; cursor: pointer; }
+.admin-view-tabs button.active { border-bottom-color: #386f58; color: #255640; }
+.admin-quotes-filter { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin: 0 22px 12px; color: #53675a; font-size: .78rem; font-weight: 700; }
+.admin-quotes-filter select, .admin-quote-manage select { min-height: 36px; padding: 6px 26px 6px 9px; border: 1px solid #cbd9d0; border-radius: 5px; background: #fff; color: #26302e; font: inherit; }
+.admin-quote-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; width: 100%; min-height: 68px; padding: 9px 20px; border: 0; border-left: 3px solid transparent; border-bottom: 1px solid #eef2ee; background: #fff; text-align: left; cursor: pointer; }
+.admin-quote-row:hover { background: #f7faf8; }
+.admin-quote-row.selected { border-left-color: #39765b; background: #edf6f0; }
+.admin-quote-row > span { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.admin-quote-row > span:first-child { flex: 1; }
+.admin-quote-row strong, .admin-quote-row small { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.admin-quote-row strong { font-size: .83rem; }
+.admin-quote-row small, .admin-quote-row time { color: #6b7a70; font-size: .72rem; }
+.admin-quote-row > span:last-child { align-items: flex-end; }
+.admin-quote-status { color: #2e7152 !important; font-weight: 700; }
+.admin-quotes-pages { display: flex; align-items: center; justify-content: space-between; gap: 5px; padding: 10px; border-top: 1px solid #e2e9e3; font-size: .76rem; }
+.admin-quotes-pages .admin-button { min-height: 32px; padding: 0 8px; font-size: .74rem; }
+.admin-quote-meta { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; padding: 18px 0; border-top: 1px solid #dfe8e2; }
+.admin-quote-meta div { display: flex; flex-direction: column; gap: 4px; min-width: 0; overflow-wrap: anywhere; }
+.admin-quote-meta small { color: #6e8072; font-size: .75rem; }
+.admin-quote-meta strong { font-size: .9rem; }
+.admin-quote-whatsapp { width: fit-content; }
+.admin-quote-comment { padding: 12px 0; color: #425548; font-size: .87rem; overflow-wrap: anywhere; }
+.admin-quote-items { border-top: 1px solid #dfe8e2; }
+.admin-quote-item { display: flex; justify-content: space-between; gap: 14px; padding: 13px 0; border-bottom: 1px solid #e8eee9; font-size: .85rem; }
+.admin-quote-item > div { display: flex; flex-direction: column; gap: 4px; min-width: 0; overflow-wrap: anywhere; }
+.admin-quote-item small { color: #6d7e70; font-size: .76rem; }
+.admin-quote-item > strong { flex: none; }
+.admin-quote-totals { display: grid; gap: 9px; max-width: 300px; margin: 18px 0 20px auto; font-size: .85rem; }
+.admin-quote-totals > div { display: flex; justify-content: space-between; gap: 12px; }
+.admin-quote-totals > div:last-child { padding-top: 10px; border-top: 1px solid #dfe8e2; font-size: .95rem; font-weight: 700; }
+.admin-quote-manage { display: flex; align-items: center; gap: 12px; padding: 20px 0; border-top: 1px solid #dfe8e2; }
+.admin-quote-manage label { display: flex; align-items: center; gap: 10px; font-size: .83rem; font-weight: 700; }
+.admin-quote-manage .admin-feedback { margin: 0; }
+
 @media (max-width: 980px) {
   .admin-workspace { grid-template-columns: minmax(260px, 290px) minmax(0, 1fr); }
   .admin-editor { padding: 25px; }
@@ -211,6 +246,7 @@
 }
 
 @media (max-width: 700px) {
+  .admin-view-tabs { padding: 0 18px; }
   .admin-topbar-inner { padding: 0 16px; }
   .admin-topbar-actions .admin-button span { display: none; }
   .admin-topbar-actions .admin-button { width: 38px; padding: 0; }
@@ -225,6 +261,7 @@
   .admin-editor { padding: 24px 18px; }
   .admin-editor-heading h2 { font-size: 1.4rem; }
   .admin-form-grid { gap: 14px; }
+  .admin-quote-meta { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 @media (max-width: 470px) {
@@ -238,4 +275,6 @@
   .admin-form-actions .admin-button.primary { width: 100%; }
   .admin-modal { padding: 18px; }
   .admin-modal-actions .danger { width: 100%; margin-right: 0; }
+  .admin-quote-meta { grid-template-columns: 1fr; }
+  .admin-quote-manage, .admin-quote-manage label { align-items: flex-start; flex-direction: column; }
 }

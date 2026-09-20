@@ -1454,6 +1454,13 @@ img {
   box-shadow: var(--shadow);
 }
 
+.quote-submit-error {
+  margin: 0;
+  color: #a13f3b;
+  font-size: .85rem;
+  line-height: 1.4;
+}
+
 .quote-form label {
   color: #4d4550;
   font-size: 0.72rem;

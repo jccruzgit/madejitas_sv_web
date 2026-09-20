@@ -10,6 +10,7 @@
     "test": "node --test",
     "check:catalog": "node scripts/catalog-browser-check.mjs",
     "check:admin": "node scripts/admin-browser-check.mjs",
+    "check:quotes": "node scripts/quotes-browser-check.mjs",
     "check:visual": "node scripts/visual-check.mjs"
   },
   "dependencies": {

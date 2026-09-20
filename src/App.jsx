@@ -30,6 +30,7 @@ import {
 } from "lucide-react";
 import { categories, money, products as demoProducts } from "./data";
 import { catalogClient, catalogConfigError, fetchPublishedCatalog } from "./catalogApi";
+import { quoteReference, submitQuote } from "./quoteApi.js";
 
 const AdminPanel = lazy(() => import("./AdminPanel.jsx"));
 
@@ -232,7 +233,7 @@ function App() {
       <main className="catalog-status page-width"><h1>Producto no disponible</h1><button className="button outline" onClick={() => go("catalog")}>Volver al catálogo</button></main>
     );
   } else if (route.page === "quote") {
-    content = <QuotePage items={cartDetails} updateItem={updateItem} />;
+    content = <QuotePage items={cartDetails} updateItem={updateItem} onSubmitted={() => setCart([])} />;
   } else if (route.page === "info") {
     content = <InfoPage slug={route.slug} />;
   } else {
@@ -708,33 +709,71 @@ function QuoteDrawer({ open, close, items, updateItem }) {
   );
 }
 
-function QuotePage({ items, updateItem }) {
+function QuotePage({ items, updateItem, onSubmitted }) {
   const [customer, setCustomer] = useState(() => storage.get("madejitas-customer", { name: "", phone: "", city: "", comment: "" }));
-  const [submitted, setSubmitted] = useState(false);
-  const subtotal = items.reduce((total, item) => total + item.product.price * item.quantity, 0);
-  const shipping = items.length ? 3.5 : 0;
-  const total = subtotal + shipping;
-  const date = new Intl.DateTimeFormat("es-SV").format(new Date());
+  const [submitted, setSubmitted] = useState(null);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
+  const request = useRef(null);
+  const previewSubtotal = items.reduce((total, item) => total + item.product.price * item.quantity, 0);
+  const displayRows = submitted?.quote
+    ? submitted.quote.items.map((line) => {
+      const original = items.find((item) => item.color.id === line.variant_id);
+      return { key: line.variant_id, productName: line.product_name, colorName: line.variant_name,
+        code: line.variant_code, quantity: line.quantity, price: Number(line.unit_price),
+        lineTotal: Number(line.line_total), image: submitted.images[line.variant_id] || original?.color.image || original?.product.image };
+    })
+    : items.map((item) => ({ key: item.key, productName: item.product.name,
+      colorName: item.color.name, code: item.color.code, quantity: item.quantity,
+      price: item.product.price, lineTotal: item.product.price * item.quantity,
+      image: item.color.image || item.product.image, source: item }));
+  const subtotal = submitted?.quote ? Number(submitted.quote.subtotal) : previewSubtotal;
+  const shipping = submitted?.quote ? Number(submitted.quote.shipping) : items.length ? 3.5 : 0;
+  const total = submitted?.quote ? Number(submitted.quote.total) : subtotal + shipping;
+  const shownCustomer = submitted?.customer || customer;
+  const date = new Intl.DateTimeFormat("es-SV").format(new Date(submitted?.quote?.created_at || Date.now()));
 
   useEffect(() => storage.set("madejitas-customer", customer), [customer]);
 
-  const updateCustomer = (event) => setCustomer((current) => ({ ...current, [event.target.name]: event.target.value }));
-  const generate = (event) => {
+  const updateCustomer = (event) => {
+    setSubmitError("");
+    setCustomer((current) => ({ ...current, [event.target.name]: event.target.value }));
+  };
+  const generate = async (event) => {
     event.preventDefault();
-    if (!customer.name.trim() || !customer.phone.trim() || !customer.city.trim()) return;
-    setSubmitted(true);
-    document.querySelector(".quote-document")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    if (submitting || submitted || !items.length) return;
+    if (!catalogClient) {
+      setSubmitted({ customer: { ...customer }, quote: null });
+      document.querySelector(".quote-document")?.scrollIntoView({ behavior: "smooth", block: "start" });
+      return;
+    }
+    const fingerprint = JSON.stringify({ customer, items: items.map((item) => [item.color.id, item.quantity]) });
+    if (request.current?.fingerprint !== fingerprint) request.current = { fingerprint, id: crypto.randomUUID() };
+    setSubmitting(true);
+    setSubmitError("");
+    try {
+      const quote = await submitQuote(request.current.id, customer, items);
+      const images = Object.fromEntries(items.map((item) => [item.color.id, item.color.image || item.product.image]));
+      setSubmitted({ customer: { ...customer }, quote, images });
+      onSubmitted();
+      document.querySelector(".quote-document")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    } catch (error) {
+      setSubmitError(error.message);
+    } finally {
+      setSubmitting(false);
+    }
   };
   const whatsappMessage = encodeURIComponent([
     "Hola Madejitas.sv, quiero solicitar una cotización:",
-    ...items.map((item) => `• ${item.quantity} × ${item.product.name}, ${item.color.name} (${item.color.code}) — ${money(item.product.price * item.quantity)}`),
+    submitted?.quote ? `Referencia: ${quoteReference(submitted.quote.quote_number)}` : "",
+    ...displayRows.map((item) => `• ${item.quantity} × ${item.productName}, ${item.colorName} (${item.code}) — ${money(item.lineTotal)}`),
     `Total estimado: ${money(total)}`,
-    `Cliente: ${customer.name || "Sin nombre"}`,
-    `Ciudad: ${customer.city || "Sin especificar"}`,
-    customer.comment ? `Comentario: ${customer.comment}` : "",
+    `Cliente: ${shownCustomer.name || "Sin nombre"}`,
+    `Ciudad: ${shownCustomer.city || "Sin especificar"}`,
+    shownCustomer.comment ? `Comentario: ${shownCustomer.comment}` : "",
   ].filter(Boolean).join("\n"));
 
-  if (!items.length) {
+  if (!items.length && !submitted) {
     return <main className="quote-page page-width"><div className="empty-state quote-empty"><ReceiptText /><h1>Tu cotización está vacía</h1><p>Agrega materiales para poder preparar el documento.</p><button className="button primary" onClick={() => go("catalog")}>Ir al catálogo</button></div></main>;
   }
 
@@ -745,25 +784,28 @@ function QuotePage({ items, updateItem }) {
         <section className="quote-form-panel no-print">
           <p className="eyebrow dark">Último paso</p>
           <h1>Tu proyecto ya está tomando forma</h1>
-          <p>Completa tus datos para preparar una vista previa de tu solicitud.</p>
-          <form className="quote-form" onSubmit={generate}>
-            <label>Nombre completo<input required name="name" value={customer.name} onChange={updateCustomer} placeholder="María López" /></label>
-            <label>WhatsApp<div className="phone-field"><span>+503</span><input required name="phone" value={customer.phone} onChange={updateCustomer} placeholder="0000 0000" inputMode="tel" /></div></label>
-            <label>Ciudad / Departamento<input required name="city" value={customer.city} onChange={updateCustomer} placeholder="San Salvador" /></label>
-            <label>Comentario opcional<textarea name="comment" value={customer.comment} onChange={updateCustomer} placeholder="Cuéntanos algo importante sobre tu pedido..." rows="3" /></label>
-            <button className="button primary full" type="submit"><ReceiptText /> Generar mi cotización</button>
-          </form>
+          {submitted ? <div role="status"><p>{submitted.quote ? `Solicitud ${quoteReference(submitted.quote.quote_number)} registrada. Te contactaremos para confirmar existencias y entrega.` : "Vista previa preparada. Esta solicitud no fue registrada."}</p><button className="button outline" onClick={() => go("catalog")}>Volver al catálogo</button></div> : <>
+            <p>Completa tus datos para solicitar tu cotización.</p>
+            <form className="quote-form" onSubmit={generate}>
+              <label>Nombre completo<input required minLength="2" maxLength="100" name="name" value={customer.name} onChange={updateCustomer} placeholder="María López" /></label>
+              <label>WhatsApp<div className="phone-field"><span>+503</span><input required name="phone" value={customer.phone} onChange={updateCustomer} placeholder="0000 0000" inputMode="tel" pattern="[0-9]{4}[ -]?[0-9]{4}" title="Ingresa 8 dígitos" /></div></label>
+              <label>Ciudad / Departamento<input required minLength="2" maxLength="100" name="city" value={customer.city} onChange={updateCustomer} placeholder="San Salvador" /></label>
+              <label>Comentario opcional<textarea name="comment" maxLength="500" value={customer.comment} onChange={updateCustomer} placeholder="Cuéntanos algo importante sobre tu pedido..." rows="3" /></label>
+              {submitError && <p role="alert" className="quote-submit-error">{submitError}</p>}
+              <button className="button primary full" type="submit" disabled={submitting}><ReceiptText /> {submitting ? "Enviando solicitud..." : catalogClient ? "Solicitar cotización" : "Generar vista previa"}</button>
+            </form>
+          </>}
         </section>
         <section className={`quote-document ${submitted ? "generated" : ""}`}>
-          <div className="document-head"><div><div className="document-brand">Madejitas.sv</div><p>Tu boutique de hilados</p></div><div><h2>Cotización</h2><p>Vista previa sin registrar<br />Fecha: {date}</p></div></div>
-          <div className="customer-data"><div><small>Cliente</small><strong>{customer.name || "Tu nombre"}</strong></div><div><small>WhatsApp</small><strong>+503 {customer.phone || "0000 0000"}</strong></div><div><small>Ciudad / Departamento</small><strong>{customer.city || "Tu ciudad"}</strong></div></div>
+          <div className="document-head"><div><div className="document-brand">Madejitas.sv</div><p>Tu boutique de hilados</p></div><div><h2>Cotización</h2><p>{submitted?.quote ? quoteReference(submitted.quote.quote_number) : "Vista previa sin registrar"}<br />Fecha: {date}</p></div></div>
+          <div className="customer-data"><div><small>Cliente</small><strong>{shownCustomer.name || "Tu nombre"}</strong></div><div><small>WhatsApp</small><strong>+503 {shownCustomer.phone || "0000 0000"}</strong></div><div><small>Ciudad / Departamento</small><strong>{shownCustomer.city || "Tu ciudad"}</strong></div></div>
           <div className="quote-table-wrap">
             <table className="quote-table"><thead><tr><th>Producto</th><th>Color</th><th>Código</th><th>Cant.</th><th>Precio</th><th>Subtotal</th></tr></thead><tbody>
-              {items.map((item) => <tr key={item.key}><td><img src={item.color.image || item.product.image} alt="" /><span>{item.product.name}</span></td><td>{item.color.name}</td><td>{item.color.code}</td><td><span className="print-only">{item.quantity}</span><div className="no-print"><Quantity value={item.quantity} decrement={() => updateItem(item.key, item.quantity - 1)} increment={() => updateItem(item.key, item.quantity + 1)} /></div></td><td>{money(item.product.price)}</td><td>{money(item.product.price * item.quantity)}</td></tr>)}
+              {displayRows.map((item) => <tr key={item.key}><td>{item.image && <img src={item.image} alt="" />}<span>{item.productName}</span></td><td>{item.colorName}</td><td>{item.code}</td><td><span className={item.source && !submitted ? "print-only" : ""}>{item.quantity}</span>{item.source && !submitted && <div className="no-print"><Quantity value={item.quantity} decrement={() => updateItem(item.key, item.quantity - 1)} increment={() => updateItem(item.key, item.quantity + 1)} /></div>}</td><td>{money(item.price)}</td><td>{money(item.lineTotal)}</td></tr>)}
             </tbody></table>
           </div>
-          <div className="document-summary"><div><span>Subtotal</span><span>{money(subtotal)}</span></div><div><span>Envío estimado</span><span>{money(shipping)}</span></div><div><strong>Total estimado</strong><strong>{money(total)}</strong></div><small>* Precios y existencias sujetos a confirmación. Esta vista previa no reserva productos.</small></div>
-          {customer.comment && <p className="document-comment"><strong>Comentario:</strong> {customer.comment}</p>}
+          <div className="document-summary"><div><span>Subtotal</span><span>{money(subtotal)}</span></div><div><span>Envío estimado</span><span>{money(shipping)}</span></div><div><strong>Total estimado</strong><strong>{money(total)}</strong></div><small>* Precios y existencias sujetos a confirmación. La cotización no reserva productos.</small></div>
+          {shownCustomer.comment && <p className="document-comment"><strong>Comentario:</strong> {shownCustomer.comment}</p>}
           <div className="document-actions no-print">
             <button className="button outline" onClick={() => window.print()}><Printer /> Imprimir / PDF</button>
             <a className="button whatsapp" href={`https://wa.me/${PHONE}?text=${whatsappMessage}`} target="_blank" rel="noreferrer"><Send /> Enviar por WhatsApp</a>
